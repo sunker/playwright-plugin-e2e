@@ -1,6 +1,6 @@
 {
   "name": "sunker-plugin-e2e",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,16 +13,16 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "keywords": [],
-  "author": "",
+  "author": "sunker",
   "license": "ISC",
   "peerDependencies": {
-    "@playwright/test": "^1.38.1"
+    "@playwright/test": "1.38.1"
   },
   "devDependencies": {
     "@grafana/e2e-selectors": "^10.1.2",
     "@grafana/eslint-config": "^6.0.0",
     "@grafana/tsconfig": "^1.3.0-rc1",
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "1.38.1",
     "@rollup/plugin-node-resolve": "15.0.1",
     "@rollup/plugin-replace": "^5.0.4",
     "@types/jest": "^29.5.5",
@@ -39,7 +39,7 @@
     "rollup-plugin-node-externals": "^5.0.0",
     "semver": "^7.5.4",
     "typescript": "^4.5.2",
-    "uuid": "8.0.1",
+    "uuid": "9.0.1",
     "yaml": "^2.3.2"
   }
 }
