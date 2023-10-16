@@ -1,0 +1,12 @@
+{
+  "extends": "@grafana/tsconfig",
+  "include": ["src/**/*.ts*", "src/index.ts"],
+  "exclude": ["dist/**/*"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declarationDir": "./compiled",
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "rootDirs": ["."]
+  }
+}

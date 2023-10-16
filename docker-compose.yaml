@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  grafana:
+    build:
+      context: .
+      args:
+        grafana_version: ${GRAFANA_VERSION:-main}
+    environment:
+      - GF_INSTALL_PLUGINS=marcusolsson-static-datasource
+    ports:
+      - 3001:3000/tcp
+    volumes:
+      - ../../plugins/redshift-datasource/dist:/var/lib/grafana/plugins/basic-datasource
+      - ./provisioning:/etc/grafana/provisioning
