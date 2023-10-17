@@ -1,6 +1,6 @@
 {
   "name": "sunker-plugin-e2e",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,6 +11,7 @@
     "./package.json"
   ],
   "scripts": {
+    "update": "npm version patch --force && yarn build && npm pack",
     "dev": "yarn bundle -w",
     "build": "tsc -p ./tsconfig.json && rollup -c rollup.config.ts",
     "bundle": "rollup -c rollup.config.ts",
