@@ -55,7 +55,7 @@ export class DashboardPage {
     await this.grafanaPage.getByTestIdOrAriaLabel('Dashboard settings').click();
     await this.grafanaPage.getByTestIdOrAriaLabel(components.Tab.title('Variables')).click();
 
-    return new VariablePage(this.grafanaPage, this.selectors, this.grafanaVersion);
+    return new VariablePage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 
   async addPanel(visualization: Visualization, datasourceName: string): Promise<EditPanelPage> {
