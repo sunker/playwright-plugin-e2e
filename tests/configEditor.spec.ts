@@ -1,20 +1,23 @@
-import { test } from '../src/fixtures/pluginFixture';
+import randomstring from 'randomstring';
+import { test, readProvision } from '../src';
+import { RedshiftProvision } from './types';
 
-test('configuration is valid', async ({ dataSourceConfigPage, page }) => {
-  await dataSourceConfigPage.createDataSource('prometheus');
-  await dataSourceConfigPage.goto();
-  await page
-    .locator('[aria-label="Data source connection URL"]')
-    .fill('http://localhost:9090');
-  await page
-    .locator('input[id^=react-select-]')
-    .first()
-    .fill('Basic authentication');
-  await page.keyboard.press('Enter');
-  await page.locator('id=basic-auth-user-input').fill('admin');
-  await page.locator('id=basic-auth-password-input').fill('admin');
+test('redshift configuration is valid', async ({ dataSourceConfigPage, grafanaPage, readProvision }) => {
+  const ds = await readProvision<RedshiftProvision>('datasources/aws-redshift.yaml').then((res) => res.datasources[0]);
+  await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', `redshift-${randomstring.generate()}`);
+  await grafanaPage.getByTestIdOrAriaLabel('Authentication Provider').fill('Access & secret key');
+  await grafanaPage.keyboard.press('Enter');
+  await grafanaPage.getByTestIdOrAriaLabel('Secret Access Key').fill(ds.secureJsonData.secretKey);
+  await grafanaPage.getByTestIdOrAriaLabel('Access Key ID').fill(ds.secureJsonData.accessKey);
+  await grafanaPage.getByTestIdOrAriaLabel('Default Region').fill(ds.jsonData.defaultRegion);
+  await grafanaPage.keyboard.press('Enter');
+  await grafanaPage.getByTestIdOrAriaLabel('Cluster Identifier').click();
+  await grafanaPage.getByTestIdOrAriaLabel('data-testid clusterID');
+  await grafanaPage.getByTestIdOrAriaLabel('Cluster Identifier').fill(ds.jsonData.clusterIdentifier);
+  await grafanaPage.keyboard.press('Enter');
+
+  await grafanaPage.getByTestIdOrAriaLabel('data-testid database').fill(ds.jsonData.database);
+  await grafanaPage.getByTestIdOrAriaLabel('data-testid dbuser').fill(ds.jsonData.dbUser);
   await dataSourceConfigPage.saveAndTest();
-  await dataSourceConfigPage.expectHealthCheckResultTextToContain(
-    'Successfully queried the Prometheus API.'
-  );
+  await dataSourceConfigPage.expectHealthCheckResultTextToContain('Data source is working');
 });

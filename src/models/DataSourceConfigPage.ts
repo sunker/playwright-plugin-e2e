@@ -1,67 +1,64 @@
-import { expect, type Page, type APIRequestContext } from '@playwright/test';
+const gte = require('semver/functions/gte');
+import { Expect, type APIRequestContext } from '@playwright/test';
+import { GrafanaPage } from '../types';
+import { Selectors } from '../selectors/types';
 var randomstring = require('randomstring');
 
 export class DataSourceConfigPage {
   datasourceJson: any;
 
   constructor(
-    private readonly page: Page,
-    private readonly request: APIRequestContext
+    readonly grafanaPage: GrafanaPage,
+    private readonly request: APIRequestContext,
+    private readonly selectors: Selectors,
+    private readonly grafanaVersion: string,
+    protected readonly expect: Expect<any>
   ) {
-    this.page = page;
+    this.grafanaPage = grafanaPage;
   }
 
-  async createDataSource(type: string) {
-    try {
-      const name = `${type}-${randomstring.generate()}`;
-      const createDsReq = await this.request.post('/api/datasources', {
-        data: {
-          name,
-          type: type,
-          access: 'proxy',
-          isDefault: false,
-        },
-      });
-      expect(createDsReq.ok()).toBeTruthy();
+  async createDataSource(type: string, name?: string) {
+    const dsName = name ?? `${type}-${randomstring.generate()}`;
+    const createDsReq = await this.request.post('/api/datasources', {
+      data: {
+        name: dsName,
+        type: type,
+        access: 'proxy',
+        isDefault: false,
+      },
+    });
+    this.expect(createDsReq.ok()).toBeTruthy();
 
-      // load ds by name
-      const getDsReq = await this.request.get(`/api/datasources/name/${name}`);
-      expect(getDsReq.ok()).toBeTruthy();
-      this.datasourceJson = await getDsReq.json();
-    } catch (error) {
-      console.log;
-    }
+    // load ds by name
+    const getDsReq = await this.request.get(`/api/datasources/name/${name}`);
+    this.expect(getDsReq.ok()).toBeTruthy();
+    this.datasourceJson = await getDsReq.json();
+    await this.goto();
   }
 
   async deleteDataSource() {
-    this.datasourceJson = await this.request.delete(
-      `/api/datasources/uid/${this.datasourceJson.uid}`
-    );
+    if (this.datasourceJson) {
+      await this.request.delete(`/api/datasources/uid/${this.datasourceJson.uid}`);
+    }
   }
 
   async goto() {
-    await this.page.goto(
-      `/connections/datasources/edit/${this.datasourceJson.uid}`,
-      {
-        waitUntil: 'networkidle',
-      }
-    );
-  }
-
-  async get() {
-    await this.page.locator('[aria-label="Secret Access Key"]').fill('hejsan');
+    const url = `${gte(this.grafanaVersion, '10.2.0') ? '/connections' : ''} /datasources/edit/${
+      this.datasourceJson.uid
+    }`;
+    await this.grafanaPage.goto(url, {
+      waitUntil: 'load',
+    });
   }
 
   async saveAndTest() {
-    await this.page
-      .getByTestId('data-testid Data source settings page Save and Test button')
-      .click();
-    await this.page.waitForResponse((resp) => resp.url().includes('/health'));
+    await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.pages.DataSource.saveAndTest).click();
+    await this.grafanaPage.waitForResponse((resp) => resp.url().includes('/health'));
   }
 
   async expectHealthCheckResultTextToContain(text: string) {
-    return await expect(
-      this.page.locator('[aria-label="Data source settings page Alert"]')
-    ).toContainText(text);
+    return await this.expect(this.grafanaPage.locator('[aria-label="Data source settings page Alert"]')).toContainText(
+      text
+    );
   }
 }

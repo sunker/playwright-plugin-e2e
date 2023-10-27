@@ -1,6 +1,6 @@
 {
   "extends": "@grafana/tsconfig",
-  "include": ["src/**/*.ts*", "src/index.ts"],
+  "include": ["src/**/*.ts*", "src/index.ts", "tests/datasourceSetup.ts"],
   "exclude": ["dist/**/*"],
   "compilerOptions": {
     "baseUrl": "./",
