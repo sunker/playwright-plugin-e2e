@@ -43,7 +43,7 @@ export class DataSourceConfigPage {
   }
 
   async goto() {
-    const url = `${gte(this.grafanaVersion, '10.2.0') ? '/connections' : ''} /datasources/edit/${
+    const url = `${gte(this.grafanaVersion, '10.2.0') ? '/connections' : ''}/datasources/edit/${
       this.datasourceJson.uid
     }`;
     await this.grafanaPage.goto(url, {

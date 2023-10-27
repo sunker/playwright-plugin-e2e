@@ -21,13 +21,15 @@ export class EditPanelPage {
       has: this.grafanaPage.locator(`[aria-label="Query editor row title ${refId}"]`),
     });
     this.expect(elem).toBeVisible();
-    const t = await elem.innerHTML();
-    console.log(t);
     return elem;
   }
 
   async refreshDashboard(waitForQueryRequest: boolean = false) {
-    await this.grafanaPage.getByTestId(this.selectors.components.RefreshPicker.runButtonV2).click();
+    // in older versions of grafana, the refresh button is rendered twice. this is a workaround to click the correct one
+    await this.grafanaPage
+      .getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.General.content)
+      .locator(`selector=${this.selectors.components.RefreshPicker.runButtonV2}`)
+      .click();
     if (waitForQueryRequest) {
       await this.grafanaPage.waitForResponse((resp) => resp.url().includes('/query'));
     }
