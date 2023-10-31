@@ -14,6 +14,7 @@ import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
 import { GrafanaPage } from '../types';
 
+const authFile = 'playwright/.auth/user.json';
 const credentials = { user: 'admin', password: 'admin' };
 
 type PluginOptions = {
@@ -38,7 +39,9 @@ type PluginFixture = {
 
 export const test = base.extend<PluginFixture & PluginOptions>({
   defaultCredentials: credentials,
-  grafanaPage: async ({ page }, use) => {
+  grafanaPage: async ({ request, page, defaultCredentials }, use) => {
+    await request.post('/login', { data: defaultCredentials });
+    await request.storageState({ path: authFile });
     await page.goto('/', { waitUntil: 'networkidle' });
 
     const customLocators = getCustomLocators(page);
