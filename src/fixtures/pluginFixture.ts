@@ -48,8 +48,8 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     const grafanaPage = Object.assign(page, customLocators) as GrafanaPage;
     await use(grafanaPage);
   },
-  grafanaVersion: async ({ page }, use) => {
-    const grafanaVersion: string = await page.evaluate('window.grafanaBootData.settings.buildInfo.version');
+  grafanaVersion: async ({ grafanaPage }, use) => {
+    const grafanaVersion: string = await grafanaPage.evaluate('window.grafanaBootData.settings.buildInfo.version');
     await use(grafanaVersion);
   },
   selectors: async ({ grafanaVersion }, use) => {

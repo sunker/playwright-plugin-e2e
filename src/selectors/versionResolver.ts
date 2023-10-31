@@ -21,7 +21,7 @@ const processSelectors = (
         let validVersion = sorted[0];
         for (let index = 0; index < sorted.length; index++) {
           const version = sorted[index];
-          if (semver.gte(grafanaVersion, version)) {
+          if (semver.gte(grafanaVersion.replace('-pre', ''), version)) {
             validVersion = version;
             break;
           }
