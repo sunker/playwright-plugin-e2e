@@ -389,7 +389,10 @@ export const versionedComponents = {
     singleLink: 'Data link',
   },
   CodeEditor: {
-    container: 'Code editor container',
+    container: {
+      '10.3.0': 'data-testid Code editor container',
+      [MIN_GRAFANA_VERSION]: 'Code editor container',
+    },
   },
   DashboardImportPage: {
     textarea: 'data-testid-import-dashboard-textarea',
