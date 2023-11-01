@@ -27,7 +27,13 @@ export class DataSourceConfigPage {
         isDefault: false,
       },
     });
-    this.expect(createDsReq.ok()).toBeTruthy();
+    const status = await createDsReq.status();
+    if (status === 409) {
+      console.log('Data source with the same name already exists');
+    } else {
+      const error = await await createDsReq.text();
+      this.expect(createDsReq.ok(), `Failed to create data source: ${error}`).toBeTruthy();
+    }
 
     // load ds by name
     const getDsReq = await this.request.get(`/api/datasources/name/${name}`);

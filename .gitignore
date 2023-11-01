@@ -7,3 +7,5 @@ node_modules/
 /compiled
 /provisioning
 /package
+.env
+.DS_STORE

@@ -7,7 +7,7 @@ import { DataSourcePicker } from './DataSourcePicker';
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 
 export class VariableEditPage {
-  dataSourcePicker: DataSourcePicker;
+  private dataSourcePicker: DataSourcePicker;
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
@@ -40,8 +40,9 @@ export class VariableEditPage {
       .getByTestIdOrAriaLabel(this.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2)
       .scrollIntoViewIfNeeded();
   }
+
   async setDataSource(name: string) {
-    this.dataSourcePicker.set(name);
+    await this.dataSourcePicker.set(name);
   }
 
   async runQuery() {

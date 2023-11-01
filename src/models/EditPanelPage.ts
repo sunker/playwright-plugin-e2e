@@ -3,17 +3,25 @@ import { Locator } from 'playwright/test';
 import { GrafanaPage } from '../types';
 import { Selectors } from '../selectors/types';
 import { Expect } from '@playwright/test';
+import { DataSourcePicker } from './DataSourcePicker';
 
 export class EditPanelPage {
+  private dataSourcePicker: DataSourcePicker;
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
     private readonly grafanaVersion: string,
     protected readonly expect: Expect<any>
-  ) {}
+  ) {
+    this.dataSourcePicker = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
+  }
 
   async apply() {
     await this.grafanaPage.getByTestId(this.selectors.components.PanelEditor.applyButton).click();
+  }
+
+  async setDataSource(name: string) {
+    await this.dataSourcePicker.set(name);
   }
 
   async getQueryEditorEditorRow(refId: string): Promise<Locator> {

@@ -33,7 +33,7 @@ export class AnnotationEditPage {
   }
 
   async setDataSource(name: string) {
-    this.dataSourcePicker.set(name);
+    await this.dataSourcePicker.set(name);
   }
 
   async runQuery() {

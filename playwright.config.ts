@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
 
+dotenv.config();
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -33,19 +35,27 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     // Setup project
+    // {
+    //   name: 'authenticate',
+    //   testDir: 'src/setup/',
+    //   testMatch: [/.*\.setup\.ts/],
+    // },
+    // {
+    //   name: 'createDataSource',
+    //   testMatch: /.*configEditor\.spec\.ts/,
+    //   dependencies: ['authenticate'],
+    //   use: {
+    //     ...devices['Desktop Chrome'],
+    //     storageState: 'playwright/.auth/user.json',
+    //   },
+    // },
     {
-      name: 'authenticate',
-      testDir: 'src/setup/',
-      testMatch: [/.*\.setup\.ts/],
-    },
-    {
-      name: 'createDataSource',
-      testMatch: /.*configEditor\.spec\.ts/,
-      dependencies: ['authenticate'],
+      name: 'setup',
+      testMatch: [/configEditor\.spec\.ts/],
       use: {
-        ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
       },
+      // dependencies: ['authenticate'],
     },
     {
       name: 'chromium',
@@ -54,7 +64,7 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       // dependencies: ['authenticate', 'createDataSource'],
-      dependencies: ['authenticate'],
+      // dependencies: ['authenticate'],
     },
 
     // {
