@@ -1,12 +1,15 @@
-import { Expect, Locator } from '@playwright/test';
-import { GrafanaPage } from '../types';
+import { Expect } from '@playwright/test';
+import { GrafanaLocator, GrafanaPage } from '../types';
 import { Selectors } from '../selectors/types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { TablePanel } from './TablePanel';
+import { TimeRange } from './TimeRange';
+import { attachCustomLocators } from 'src/utils/locator';
 
 export class ExplorePage {
   datasource: DataSourcePicker;
   tablePanel: TablePanel;
+  timeRange: any;
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
@@ -15,6 +18,7 @@ export class ExplorePage {
   ) {
     this.datasource = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
     this.tablePanel = new TablePanel(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
+    this.timeRange = new TimeRange(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 
   async goto() {
@@ -23,12 +27,12 @@ export class ExplorePage {
     });
   }
 
-  async getQueryEditorEditorRow(refId: string): Promise<Locator> {
-    const elem = await this.grafanaPage.locator('[aria-label="Query editor row"]').filter({
+  async getQueryEditorEditorRow(refId: string): Promise<GrafanaLocator> {
+    const locator = await this.grafanaPage.locator('[aria-label="Query editor row"]').filter({
       has: this.grafanaPage.locator(`[aria-label="Query editor row title ${refId}"]`),
     });
-    this.expect(elem).toBeVisible();
-    return elem;
+    this.expect(locator).toBeVisible();
+    return attachCustomLocators(locator);
   }
 
   async runQuery() {

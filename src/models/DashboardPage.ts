@@ -7,10 +7,13 @@ import { GrafanaPage } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { EditPanelPage } from './EditPanelPage';
 import { VariablePage } from './VariablePage';
+import { TimeRange } from './TimeRange';
 
 export class DashboardPage {
   dashboardJson: any;
   dataSourcePicker: any;
+  timeRange: TimeRange;
+
   constructor(
     protected readonly grafanaPage: GrafanaPage,
     protected readonly request: APIRequestContext,
@@ -19,6 +22,7 @@ export class DashboardPage {
     protected readonly expect: Expect<any>
   ) {
     this.dataSourcePicker = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
+    this.timeRange = new TimeRange(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 
   async goto() {
@@ -58,28 +62,6 @@ export class DashboardPage {
     return new VariablePage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 
-  // async addPanel(visualization: Visualization, datasourceName: string): Promise<EditPanelPage> {
-  //   if (gte(this.grafanaVersion, '10.0.0')) {
-  //     const title = gte(this.grafanaVersion, '10.1.0') ? 'Add button' : 'Add panel button';
-  //     await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PageToolbar.itemButton(title)).click();
-  //     await this.grafanaPage
-  //       .getByTestIdOrAriaLabel(this.selectors.pages.AddDashboard.itemButton('Add new visualization menu item'))
-  //       .click();
-  //   } else {
-  //     await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.pages.AddDashboard.addNewPanel).click();
-  //   }
-
-  //   // select visualization
-  //   await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.toggleVizPicker).click();
-
-  //   await this.grafanaPage
-  //     .getByTestIdOrAriaLabel(this.selectors.components.PluginVisualization.item(visualization))
-  //     .click();
-
-  //   await this.dataSourcePicker.set(datasourceName);
-  //   return new EditPanelPage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
-  // }
-
   async addPanel(): Promise<EditPanelPage> {
     if (gte(this.grafanaVersion, '10.0.0')) {
       const title = gte(this.grafanaVersion, '10.1.0') ? 'Add button' : 'Add panel button';
@@ -100,27 +82,5 @@ export class DashboardPage {
 
   async refreshDashboard() {
     await this.grafanaPage.getByTestId(this.selectors.components.RefreshPicker.runButtonV2).click();
-    // await this.grafanaPage.waitForResponse((resp) =>
-    //   resp.url().includes('/query')
-    // );
   }
 }
-
-export type Visualization =
-  | 'Alert list'
-  | 'Bar gauge'
-  | 'Clock'
-  | 'Dashboard list'
-  | 'Gauge'
-  | 'Graph'
-  | 'Heatmap'
-  | 'Logs'
-  | 'News'
-  | 'Pie Chart'
-  | 'Plugin list'
-  | 'Polystat'
-  | 'Stat'
-  | 'Table'
-  | 'Text'
-  | 'Time series'
-  | 'Worldmap Panel';

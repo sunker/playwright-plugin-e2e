@@ -2,7 +2,12 @@ const lte = require('semver/functions/lte');
 import { test } from '../src';
 import { RedshiftProvision } from './types';
 
-test('explore', async ({ explorePage, grafanaPage, selectors, readProvision }) => {
+test('fill in new query, run it and assert on result', async ({
+  explorePage,
+  grafanaPage,
+  selectors,
+  readProvision,
+}) => {
   const ds = await readProvision<RedshiftProvision>('datasources/aws-redshift.yaml').then((res) => res.datasources[0]);
   await explorePage.datasource.set(ds.name);
   const queryEditorRowLocator = await explorePage.getQueryEditorEditorRow('A');

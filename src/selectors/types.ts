@@ -107,7 +107,9 @@ export type Components = {
       };
     };
   };
-  VizLegend: {};
+  VizLegend: {
+    seriesName: (name: string) => string;
+  };
   Drawer: {
     General: {
       expand: string;

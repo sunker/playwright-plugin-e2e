@@ -82,7 +82,7 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     await emptyDashboardPage.goto();
     await use(emptyDashboardPage);
   },
-  emptyEditPanelPage: async ({ grafanaPage, emptyDashboardPage, request, selectors, grafanaVersion }, use) => {
+  emptyEditPanelPage: async ({ emptyDashboardPage }, use) => {
     const editPanelPage = await emptyDashboardPage.addPanel();
     await use(editPanelPage);
   },

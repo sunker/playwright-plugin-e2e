@@ -21,3 +21,22 @@ export interface GrafanaPage extends Page {
 export interface GrafanaLocator extends Locator {
   getByTestIdOrAriaLabel(selector: string): GrafanaLocator;
 }
+
+export type Visualization =
+  | 'Alert list'
+  | 'Bar gauge'
+  | 'Clock'
+  | 'Dashboard list'
+  | 'Gauge'
+  | 'Graph'
+  | 'Heatmap'
+  | 'Logs'
+  | 'News'
+  | 'Pie Chart'
+  | 'Plugin list'
+  | 'Polystat'
+  | 'Stat'
+  | 'Table'
+  | 'Text'
+  | 'Time series'
+  | 'Worldmap Panel';
