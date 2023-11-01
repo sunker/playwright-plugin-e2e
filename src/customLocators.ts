@@ -1,13 +1,13 @@
 import { Locator, Page } from '@playwright/test';
 
-export const getCustomLocators = (page: Page) => {
+export const getCustomLocators = (root: Page | Locator) => {
   return {
     getByTestIdOrAriaLabel(selector: string): Locator {
       if (selector.startsWith('data-testid')) {
-        return page.getByTestId(selector);
+        return root.getByTestId(selector);
       }
 
-      return page.locator(`[aria-label="${selector}"]`);
+      return root.locator(`[aria-label="${selector}"]`);
     },
   };
 };

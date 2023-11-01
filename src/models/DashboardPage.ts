@@ -58,7 +58,29 @@ export class DashboardPage {
     return new VariablePage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 
-  async addPanel(visualization: Visualization, datasourceName: string): Promise<EditPanelPage> {
+  // async addPanel(visualization: Visualization, datasourceName: string): Promise<EditPanelPage> {
+  //   if (gte(this.grafanaVersion, '10.0.0')) {
+  //     const title = gte(this.grafanaVersion, '10.1.0') ? 'Add button' : 'Add panel button';
+  //     await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PageToolbar.itemButton(title)).click();
+  //     await this.grafanaPage
+  //       .getByTestIdOrAriaLabel(this.selectors.pages.AddDashboard.itemButton('Add new visualization menu item'))
+  //       .click();
+  //   } else {
+  //     await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.pages.AddDashboard.addNewPanel).click();
+  //   }
+
+  //   // select visualization
+  //   await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.toggleVizPicker).click();
+
+  //   await this.grafanaPage
+  //     .getByTestIdOrAriaLabel(this.selectors.components.PluginVisualization.item(visualization))
+  //     .click();
+
+  //   await this.dataSourcePicker.set(datasourceName);
+  //   return new EditPanelPage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
+  // }
+
+  async addPanel(): Promise<EditPanelPage> {
     if (gte(this.grafanaVersion, '10.0.0')) {
       const title = gte(this.grafanaVersion, '10.1.0') ? 'Add button' : 'Add panel button';
       await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PageToolbar.itemButton(title)).click();
@@ -69,14 +91,6 @@ export class DashboardPage {
       await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.pages.AddDashboard.addNewPanel).click();
     }
 
-    // select visualization
-    await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.toggleVizPicker).click();
-
-    await this.grafanaPage
-      .getByTestIdOrAriaLabel(this.selectors.components.PluginVisualization.item(visualization))
-      .click();
-
-    await this.dataSourcePicker.set(datasourceName);
     return new EditPanelPage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
 

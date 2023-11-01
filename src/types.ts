@@ -17,3 +17,7 @@ export interface DataSource {
 export interface GrafanaPage extends Page {
   getByTestIdOrAriaLabel(selector: string): Locator;
 }
+
+export interface GrafanaLocator extends Locator {
+  getByTestIdOrAriaLabel(selector: string): GrafanaLocator;
+}

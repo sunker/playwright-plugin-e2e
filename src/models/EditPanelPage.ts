@@ -1,12 +1,14 @@
 const gte = require('semver/functions/gte');
-import { Locator } from 'playwright/test';
-import { GrafanaPage } from '../types';
+import { GrafanaLocator, GrafanaPage } from '../types';
 import { Selectors } from '../selectors/types';
 import { Expect } from '@playwright/test';
 import { DataSourcePicker } from './DataSourcePicker';
+import { attachCustomLocators } from 'src/utils/locator';
+import { TablePanel } from './TablePanel';
 
 export class EditPanelPage {
   datasource: DataSourcePicker;
+  tablePanel: any;
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
@@ -14,18 +16,27 @@ export class EditPanelPage {
     protected readonly expect: Expect<any>
   ) {
     this.datasource = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
+    this.tablePanel = new TablePanel(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
+  }
+
+  async setVisualization(visualization: string) {
+    await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.toggleVizPicker).click();
+
+    await this.grafanaPage
+      .getByTestIdOrAriaLabel(this.selectors.components.PluginVisualization.item(visualization))
+      .click();
   }
 
   async apply() {
     await this.grafanaPage.getByTestId(this.selectors.components.PanelEditor.applyButton).click();
   }
 
-  async getQueryEditorEditorRow(refId: string): Promise<Locator> {
-    const elem = await this.grafanaPage.locator('[aria-label="Query editor row"]').filter({
+  async getQueryEditorEditorRow(refId: string): Promise<GrafanaLocator> {
+    const locator = await this.grafanaPage.locator('[aria-label="Query editor row"]').filter({
       has: this.grafanaPage.locator(`[aria-label="Query editor row title ${refId}"]`),
     });
-    this.expect(elem).toBeVisible();
-    return elem;
+    this.expect(locator).toBeVisible();
+    return attachCustomLocators(locator);
   }
 
   async refreshDashboard(waitForQueryRequest: boolean = false) {
@@ -39,10 +50,10 @@ export class EditPanelPage {
     }
   }
 
-  async expectTableToContainText(text: string) {
-    const locator = gte(this.grafanaVersion, '10.2.0')
-      ? this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.Panels.Visualization.Table.body)
-      : this.grafanaPage.locator('div[role="table"]');
-    return await this.expect(locator).toContainText(text);
-  }
+  // async expectTableToContainText(text: string) {
+  //   const locator = gte(this.grafanaVersion, '10.2.0')
+  //     ? this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.Panels.Visualization.Table.body)
+  //     : this.grafanaPage.locator('div[role="table"]');
+  //   return await this.expect(locator).toContainText(text);
+  // }
 }
