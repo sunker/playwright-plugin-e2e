@@ -13,6 +13,7 @@ import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
 import { GrafanaPage } from '../types';
+import { ExplorePage } from '../models/ExplorePage';
 
 const authFile = 'playwright/.auth/user.json';
 const credentials = { user: 'admin', password: 'admin' };
@@ -34,6 +35,8 @@ type PluginFixture = {
   variableEditPage: VariableEditPage;
   annotationEditPage: AnnotationEditPage;
   selectorRegistration: any;
+  explorePage: ExplorePage;
+
   readProvision<T = any>(path: string): Promise<T>;
 };
 
@@ -71,7 +74,7 @@ export const test = base.extend<PluginFixture & PluginOptions>({
   dataSourceConfigPage: async ({ request, grafanaPage, grafanaVersion, selectors }, use) => {
     const configPage = new DataSourceConfigPage(grafanaPage, request, selectors, grafanaVersion, expect);
     await use(configPage);
-    await configPage.deleteDataSource();
+    // await configPage.deleteDataSource();
   },
   emptyDashboardPage: async ({ grafanaPage, request, selectors, grafanaVersion }, use) => {
     const emptyDashboardPage = new EmptyDashboardPage(grafanaPage, request, selectors, grafanaVersion, expect);
@@ -83,6 +86,11 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     await variablePage.goto();
     const variableEditPage = await variablePage.clickAddNew();
     await use(variableEditPage);
+  },
+  explorePage: async ({ grafanaPage, selectors, grafanaVersion }, use) => {
+    const explorePage = new ExplorePage(grafanaPage, selectors, grafanaVersion, expect);
+    await explorePage.goto();
+    await use(explorePage);
   },
   readProvision: async ({}, use) => {
     await use((path) => readProvision(process.cwd(), path));

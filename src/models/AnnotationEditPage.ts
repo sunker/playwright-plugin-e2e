@@ -6,14 +6,14 @@ import { GrafanaPage } from '../types';
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 
 export class AnnotationEditPage {
-  dataSourcePicker: DataSourcePicker;
+  datasource: DataSourcePicker;
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
     private readonly grafanaVersion: string,
     protected readonly expect: Expect<any>
   ) {
-    this.dataSourcePicker = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
+    this.datasource = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
   }
 
   async fillGeneralFields(type: VariableType) {
@@ -30,10 +30,6 @@ export class AnnotationEditPage {
     await this.grafanaPage
       .getByTestIdOrAriaLabel(this.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2)
       .scrollIntoViewIfNeeded();
-  }
-
-  async setDataSource(name: string) {
-    await this.dataSourcePicker.set(name);
   }
 
   async runQuery() {
