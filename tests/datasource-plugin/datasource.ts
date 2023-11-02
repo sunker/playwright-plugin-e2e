@@ -1,4 +1,4 @@
-import { DataSource } from '../src/types';
+import { DataSource } from '../../src/types';
 
 export const ds: DataSource = {
   database: '',

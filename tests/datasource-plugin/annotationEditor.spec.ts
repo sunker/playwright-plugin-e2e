@@ -1,5 +1,5 @@
 const lte = require('semver/functions/lte');
-import { test } from '../src';
+import { test } from '../../src';
 import { ds } from './datasource';
 import { RedshiftProvision } from './types';
 

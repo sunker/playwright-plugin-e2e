@@ -1,5 +1,5 @@
 import randomstring from 'randomstring';
-import { test, readProvision } from '../src';
+import { test, readProvision } from '../../src';
 import { RedshiftProvision } from './types';
 import { ds } from './datasource';
 

@@ -1,4 +1,4 @@
-import { test, expect, readProvision } from '../src';
+import { test, expect, readProvision } from '../../src';
 import { RedshiftProvision } from './types';
 
 test('variable editor', async ({ variableEditPage, grafanaPage, selectors, readProvision }) => {

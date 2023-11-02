@@ -1,5 +1,5 @@
 import randomstring from 'randomstring';
-import { DataSource, test as base, createDataSource } from '../../src';
+import { DataSource, test as base, createDataSource } from '../../../src';
 
 type PluginFixture = {
   datasource: DataSource;
