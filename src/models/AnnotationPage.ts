@@ -31,9 +31,4 @@ export class AnnotationPage {
 
     return new AnnotationEditPage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
   }
-
-  // not implemented
-  async clickEditAnnotation(variableName: string) {
-    return new AnnotationEditPage(this.grafanaPage, this.selectors, this.grafanaVersion, this.expect);
-  }
 }

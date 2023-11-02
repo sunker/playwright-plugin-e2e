@@ -4,7 +4,7 @@ import { Selectors } from '../selectors/types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
-import { attachCustomLocators } from 'src/utils/locator';
+import { attachCustomLocators } from '../utils/locator';
 
 export class ExplorePage {
   datasource: DataSourcePicker;

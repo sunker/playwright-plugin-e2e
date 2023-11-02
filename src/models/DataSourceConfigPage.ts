@@ -1,8 +1,9 @@
 const gte = require('semver/functions/gte');
-import { Expect, type APIRequestContext } from '@playwright/test';
-import { GrafanaPage } from '../types';
-import { Selectors } from '../selectors/types';
 var randomstring = require('randomstring');
+import { Expect, type APIRequestContext } from '@playwright/test';
+import { DataSource, GrafanaPage } from '../types';
+import { Selectors } from '../selectors/types';
+import { createDataSource } from '../utils';
 
 export class DataSourceConfigPage {
   datasourceJson: any;
@@ -18,27 +19,10 @@ export class DataSourceConfigPage {
   }
 
   async createDataSource(type: string, name?: string) {
-    const dsName = name ?? `${type}-${randomstring.generate()}`;
-    const createDsReq = await this.request.post('/api/datasources', {
-      data: {
-        name: dsName,
-        type: type,
-        access: 'proxy',
-        isDefault: false,
-      },
-    });
-    const status = await createDsReq.status();
-    if (status === 409) {
-      console.log('Data source with the same name already exists');
-    } else {
-      const error = await await createDsReq.text();
-      this.expect(createDsReq.ok(), `Failed to create data source: ${error}`).toBeTruthy();
-    }
-
-    // load ds by name
-    const getDsReq = await this.request.get(`/api/datasources/name/${name}`);
-    this.expect(getDsReq.ok()).toBeTruthy();
-    this.datasourceJson = await getDsReq.json();
+    this.datasourceJson = await createDataSource(this.request, {
+      type,
+      name: name ?? `${type}-${randomstring.generate()}`,
+    } as DataSource);
     await this.goto();
   }
 

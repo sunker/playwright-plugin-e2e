@@ -16,10 +16,6 @@ export class AnnotationEditPage {
     this.datasource = new DataSourcePicker(this.grafanaPage, this.selectors, this.grafanaVersion);
   }
 
-  async fillGeneralFields(type: VariableType) {
-    throw new Error('Not implemented');
-  }
-
   async setVariableType(type: VariableType) {
     await this.grafanaPage
       .getByTestIdOrAriaLabel(this.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2)
