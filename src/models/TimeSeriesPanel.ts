@@ -1,20 +1,17 @@
-import { Expect } from '@playwright/test';
-import { GrafanaPage } from '../types';
-import { Selectors } from '../selectors/types';
+import { Expect, Page } from '@playwright/test';
 
-export class TimeSeriesPanel {
-  constructor(
-    private readonly grafanaPage: GrafanaPage,
-    private readonly selectors: Selectors,
-    // @ts-ignore
-    private readonly grafanaVersion: string,
-    private readonly expect: Expect<any>
-  ) {}
+import { Selectors } from '../selectors/types';
+import { GrafanaPage } from './GrafanaPage';
+
+export class TimeSeriesPanel extends GrafanaPage {
+  constructor(page: Page, selectors: Selectors, grafanaVersion: string, expect: Expect<any>) {
+    super(page, selectors, grafanaVersion, expect);
+  }
 
   async expectToContainLegendLabels(text: string[]) {
     for (const label of text) {
       await this.expect(
-        this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.VizLegend.seriesName(label))
+        this.getByTestIdOrAriaLabel(this.selectors.components.VizLegend.seriesName(label))
       ).toBeVisible();
     }
   }

@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator } from '@playwright/test';
 
 export interface DataSource {
   id: number;
@@ -14,9 +14,9 @@ export interface DataSource {
   secureJsonData: any;
 }
 
-export interface GrafanaPage extends Page {
-  getByTestIdOrAriaLabel(selector: string): Locator;
-}
+// export interface Page extends Page {
+//   getByTestIdOrAriaLabel(selector: string): Locator;
+// }
 
 export interface GrafanaLocator extends Locator {
   getByTestIdOrAriaLabel(selector: string): GrafanaLocator;

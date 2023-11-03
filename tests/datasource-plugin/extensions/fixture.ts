@@ -6,7 +6,7 @@ type PluginFixture = {
 };
 
 export const test = base.extend<PluginFixture>({
-  datasource: async ({ grafanaPage, request }, use) => {
+  datasource: async ({ page, request }, use) => {
     const datasource = await createDataSource(request, {
       type: 'grafana-redshift-datasource',
       name: `redshift-${randomstring.generate()}`,

@@ -9,12 +9,9 @@ type GotoDashboardCommand = TestFixture<
   PluginFixture & PluginOptions & PlaywrightCombinedArgs
 >;
 
-export const gotoDashboardCommand: GotoDashboardCommand = async (
-  { request, grafanaPage, selectors, grafanaVersion },
-  use
-) => {
+export const gotoDashboardCommand: GotoDashboardCommand = async ({ request, page, selectors, grafanaVersion }, use) => {
   await use(async (args) => {
-    const dashboardPage = new DashboardPage(grafanaPage, request, selectors, grafanaVersion, expect, args.uid);
+    const dashboardPage = new DashboardPage(page, selectors, grafanaVersion, expect, request, args.uid);
     await dashboardPage.goto(args);
     return dashboardPage;
   });

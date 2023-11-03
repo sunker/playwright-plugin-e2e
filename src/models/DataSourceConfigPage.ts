@@ -1,21 +1,22 @@
 const gte = require('semver/functions/gte');
 var randomstring = require('randomstring');
-import { Expect, type APIRequestContext } from '@playwright/test';
-import { DataSource, GrafanaPage } from '../types';
+import { Expect, type APIRequestContext, Page } from '@playwright/test';
+import { DataSource } from '../types';
 import { Selectors } from '../selectors/types';
 import { createDataSource } from '../utils';
+import { GrafanaPage } from './GrafanaPage';
 
-export class DataSourceConfigPage {
+export class DataSourceConfigPage extends GrafanaPage {
   datasourceJson: any;
 
   constructor(
-    readonly grafanaPage: GrafanaPage,
-    private readonly request: APIRequestContext,
-    private readonly selectors: Selectors,
-    private readonly grafanaVersion: string,
-    protected readonly expect: Expect<any>
+    page: Page,
+    selectors: Selectors,
+    grafanaVersion: string,
+    expect: Expect<any>,
+    private readonly request: APIRequestContext
   ) {
-    this.grafanaPage = grafanaPage;
+    super(page, selectors, grafanaVersion, expect);
   }
 
   async createDataSource(type: string, name?: string) {
@@ -36,19 +37,17 @@ export class DataSourceConfigPage {
     const url = `${gte(this.grafanaVersion, '10.2.0') ? '/connections' : ''}/datasources/edit/${
       this.datasourceJson.uid
     }`;
-    await this.grafanaPage.goto(url, {
+    await this.page.goto(url, {
       waitUntil: 'load',
     });
   }
 
   async saveAndTest() {
-    await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.pages.DataSource.saveAndTest).click();
-    await this.grafanaPage.waitForResponse((resp) => resp.url().includes('/health'));
+    await this.getByTestIdOrAriaLabel(this.selectors.pages.DataSource.saveAndTest).click();
+    await this.page.waitForResponse((resp) => resp.url().includes('/health'));
   }
 
   async expectHealthCheckResultTextToContain(text: string) {
-    return await this.expect(this.grafanaPage.locator('[aria-label="Data source settings page Alert"]')).toContainText(
-      text
-    );
+    return await this.expect(this.page.locator('[aria-label="Data source settings page Alert"]')).toContainText(text);
   }
 }

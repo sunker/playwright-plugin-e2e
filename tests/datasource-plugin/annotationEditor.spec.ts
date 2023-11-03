@@ -3,18 +3,18 @@ import { test } from '../../src';
 import { ds } from './datasource';
 import { RedshiftProvision } from './types';
 
-test.skip('annotation editor with existing ds', async ({ annotationEditPage, grafanaPage, selectors }) => {
+test.skip('annotation editor with existing ds', async ({ annotationEditPage, page, selectors }) => {
   await annotationEditPage.datasource.set(ds.name);
-  await grafanaPage.waitForFunction(() => (window as any).monaco);
-  await grafanaPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
-  await grafanaPage.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');
+  await page.waitForFunction(() => (window as any).monaco);
+  await annotationEditPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
+  await page.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');
   await annotationEditPage.runQuery();
   await annotationEditPage.expectRunQueryResultToContainText('5 events (from 2 fields)');
 });
 
 test('annotation editor with provisioned ds', async ({
   annotationEditPage,
-  grafanaPage,
+  page,
   selectors,
   readProvision,
   grafanaVersion,
@@ -24,9 +24,9 @@ test('annotation editor with provisioned ds', async ({
     (res) => res.datasources[0]
   );
   await annotationEditPage.datasource.set(ds.name);
-  await grafanaPage.waitForFunction(() => (window as any).monaco);
-  await grafanaPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
-  await grafanaPage.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');
+  await page.waitForFunction(() => (window as any).monaco);
+  await annotationEditPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
+  await page.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');
   await annotationEditPage.runQuery();
   await annotationEditPage.expectRunQueryResultToContainText('5 events (from 2 fields)');
 });

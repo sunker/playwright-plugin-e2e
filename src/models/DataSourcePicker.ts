@@ -1,22 +1,18 @@
+import { Expect, Page } from '@playwright/test';
 import { Selectors } from '../selectors/types';
-import { GrafanaPage } from '../types';
+import { GrafanaPage } from './GrafanaPage';
 
-export class DataSourcePicker {
-  constructor(
-    private readonly grafanaPage: GrafanaPage,
-    private readonly selectors: Selectors,
-    grafanaVersion: string
-  ) {}
+export class DataSourcePicker extends GrafanaPage {
+  constructor(page: Page, selectors: Selectors, grafanaVersion: string, expect: Expect<any>) {
+    super(page, selectors, grafanaVersion, expect);
+  }
 
   async set(name: string) {
-    await this.grafanaPage
-      .getByTestIdOrAriaLabel(this.selectors.components.DataSourcePicker.container)
-      .locator('input')
-      .fill(name);
+    await this.getByTestIdOrAriaLabel(this.selectors.components.DataSourcePicker.container).locator('input').fill(name);
 
     // nasty hack to get the selection to work in 10.ish versions of Grafana. needs to be fixed properly
-    await this.grafanaPage.keyboard.press('ArrowDown');
-    await this.grafanaPage.keyboard.press('ArrowUp');
-    await this.grafanaPage.keyboard.press('Enter');
+    await this.page.keyboard.press('ArrowDown');
+    await this.page.keyboard.press('ArrowUp');
+    await this.page.keyboard.press('Enter');
   }
 }

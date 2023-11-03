@@ -4,7 +4,7 @@ import { VariableEditPage } from '../models/VariableEditPage';
 import { DashboardPage } from '../models/DashboardPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { EditPanelPage } from '../models/EditPanelPage';
-import { GrafanaPage, ImportDashboardArgs, GotoDashboardArgs, LoginArgs } from '../types';
+import { ImportDashboardArgs, GotoDashboardArgs, LoginArgs } from '../types';
 import { ExplorePage } from '../models/ExplorePage';
 import { Selectors } from '../selectors/types';
 
@@ -15,7 +15,6 @@ export type PluginOptions = {
 
 export type PluginFixture = {
   // Page objects
-  grafanaPage: GrafanaPage;
   dataSourceConfigPage: DataSourceConfigPage;
   grafanaVersion: string;
   selectors: Selectors;

@@ -11,7 +11,7 @@ type ImportDashboardCommand = TestFixture<
 >;
 
 export const importDashboardCommand: ImportDashboardCommand = async (
-  { request, grafanaPage, selectors, grafanaVersion },
+  { request, page, selectors, grafanaVersion },
   use
 ) => {
   await use(async (args) => {
@@ -27,7 +27,7 @@ export const importDashboardCommand: ImportDashboardCommand = async (
     });
     expect(importDashboardReq.ok()).toBeTruthy();
     const dashboardJson = await importDashboardReq.json();
-    const dashboardPage = new DashboardPage(grafanaPage, request, selectors, grafanaVersion, expect, dashboardJson.uid);
+    const dashboardPage = new DashboardPage(page, selectors, grafanaVersion, expect, request, dashboardJson.uid);
     await dashboardPage.goto();
     return dashboardPage;
   });
