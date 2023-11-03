@@ -7,7 +7,13 @@ import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
 import { ExplorePage } from '../models/ExplorePage';
-import { readProvisionCommand, gotoDashboardCommand, importDashboardCommand, loginCommand } from '../commands';
+import {
+  readProvisionCommand,
+  gotoDashboardCommand,
+  importDashboardCommand,
+  loginCommand,
+  createDataSourceViaAPICommand,
+} from '../commands';
 import { PluginFixture, PluginOptions } from './types';
 
 selectors.register('selector', grafanaSelectorEngine);
@@ -67,6 +73,7 @@ export const test = base.extend<PluginFixture & PluginOptions>({
   gotoDashboard: gotoDashboardCommand,
   importDashboard: importDashboardCommand,
   login: loginCommand,
+  createDataSource: createDataSourceViaAPICommand,
 });
 
 export { expect, selectors } from '@playwright/test';

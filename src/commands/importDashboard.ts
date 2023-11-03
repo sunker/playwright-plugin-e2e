@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { expect, TestFixture } from '@playwright/test';
 import { DashboardPage } from '../models/DashboardPage';
 import { PluginFixture, PluginOptions } from '../fixtures/types';
-import { ImportDashboardArgs } from '../types';
+import { Dashboard, ImportDashboardArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
 
 type ImportDashboardCommand = TestFixture<
@@ -26,7 +26,7 @@ export const importDashboardCommand: ImportDashboardCommand = async (
       },
     });
     expect(importDashboardReq.ok()).toBeTruthy();
-    const dashboardJson = await importDashboardReq.json();
+    const dashboardJson: Dashboard = await importDashboardReq.json();
     const dashboardPage = new DashboardPage(page, selectors, grafanaVersion, expect, request, dashboardJson.uid);
     await dashboardPage.goto();
     return dashboardPage;

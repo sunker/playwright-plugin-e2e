@@ -4,7 +4,7 @@ import { VariableEditPage } from '../models/VariableEditPage';
 import { DashboardPage } from '../models/DashboardPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { EditPanelPage } from '../models/EditPanelPage';
-import { ImportDashboardArgs, GotoDashboardArgs, LoginArgs } from '../types';
+import { ImportDashboardArgs, GotoDashboardArgs, LoginArgs, DataSource, CreateDataSourceArgs } from '../types';
 import { ExplorePage } from '../models/ExplorePage';
 import { Selectors } from '../selectors/types';
 
@@ -26,6 +26,7 @@ export type PluginFixture = {
   explorePage: ExplorePage;
   // Commands
   login: (args?: LoginArgs) => Promise<void>;
+  createDataSource: (args: CreateDataSourceArgs) => Promise<DataSource>;
   importDashboard: (args: ImportDashboardArgs) => Promise<DashboardPage>;
   gotoDashboard: (args: GotoDashboardArgs) => Promise<DashboardPage>;
   readProvision<T = any>(args: ImportDashboardArgs): Promise<T>;

@@ -45,17 +45,17 @@ export default defineConfig<PluginOptions>({
     //     storageState: 'playwright/.auth/user.json',
     //   },
     // },
-    // {
-    //   name: 'setup',
-    //   testMatch: [/configEditor\.spec\.ts/],
-    //   use: {
-    //     storageState: 'playwright/.auth/user.json',
-    //   },
-    //   dependencies: ['authenticate'],
-    // },
     {
       name: 'authenticate',
       testMatch: [/.*auth\.setup\.ts/],
+    },
+    {
+      name: 'setupDatasource',
+      use: {
+        storageState: 'playwright/.auth/user.json',
+      },
+      testMatch: [/.*datasource\.setup\.ts/],
+      dependencies: ['authenticate'],
     },
     {
       name: 'chromium',
@@ -63,8 +63,8 @@ export default defineConfig<PluginOptions>({
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
       },
-      // dependencies: ['authenticate', 'createDataSource'],
-      dependencies: ['authenticate'],
+      dependencies: ['authenticate', 'setupDatasource'],
+      // dependencies: ['authenticate'],
     },
 
     // {

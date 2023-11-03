@@ -11,7 +11,7 @@ test.describe(() => {
   }) => {
     await emptyEditPanelPage.setVisualization('Clock');
     await emptyEditPanelPage.setPanelTitle('Clock panel test');
-    await page.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    await emptyEditPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });
@@ -26,7 +26,7 @@ test.describe(() => {
     const dashboardPage = await importDashboard({ filePath: dashboardPath });
     const editPanelPage = await dashboardPage.gotoEditPanelPage('5');
     await expect(editPanelPage.getVisualizationName()).toHaveText('Clock');
-    await page.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    await editPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });
@@ -40,10 +40,10 @@ test.describe(() => {
   }, testInfo) => {
     testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Could not find dashboard file');
     const dashboardJson = await readProvision({ filePath: 'dashboards/clockpanel/clock-panel.json' });
-    const dashboardPage = await new DashboardPage(page, request, selectors, grafanaVersion, expect, dashboardJson.uid);
+    const dashboardPage = await new DashboardPage(page, selectors, grafanaVersion, expect, request, dashboardJson.uid);
     const editPanelPage = await dashboardPage.gotoEditPanelPage('5');
     await expect(editPanelPage.getVisualizationName()).toHaveText('Clock');
-    await page.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    await editPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });

@@ -1,17 +1,21 @@
 import { Locator } from '@playwright/test';
 
 export interface DataSource {
-  id: number;
-  uid: string;
+  id?: number;
+  uid?: string;
   orgId?: number;
   name: string;
   type: string;
-  access: string;
-  url: string;
-  database: string;
-  isDefault: boolean;
-  jsonData: any;
-  secureJsonData: any;
+  access?: string;
+  url?: string;
+  database?: string;
+  isDefault?: boolean;
+  jsonData?: any;
+  secureJsonData?: any;
+}
+
+export interface Dashboard {
+  uid: string;
 }
 
 // export interface Page extends Page {
@@ -101,3 +105,7 @@ export interface TimeRangeArgs {
    */
   zone?: string;
 }
+
+export type CreateDataSourceArgs = {
+  datasource: DataSource;
+};

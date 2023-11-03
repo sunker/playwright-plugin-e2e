@@ -7,8 +7,8 @@ export const createDataSource = async (request: APIRequestContext, datasource: D
   const dsName = name ?? `${type}-${randomstring.generate()}`;
   const createDsReq = await request.post('/api/datasources', {
     data: {
+      ...datasource,
       name: dsName,
-      type: type,
       access: 'proxy',
       isDefault: false,
     },
