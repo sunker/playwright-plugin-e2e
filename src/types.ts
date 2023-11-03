@@ -23,17 +23,6 @@ export interface GrafanaLocator extends Locator {
   getByTestIdOrAriaLabel(selector: string): GrafanaLocator;
 }
 
-export type GotoDashboardArgs = {
-  uid?: string;
-  timeRange?: TimeRangeConfig;
-  queryParams?: URLSearchParams;
-};
-
-export type ImportDashboardArgs = {
-  // file path relative to the root of the project
-  filePath: string;
-};
-
 export type Visualization =
   | 'Alert list'
   | 'Bar gauge'

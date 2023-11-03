@@ -1,11 +1,9 @@
-import fs from 'fs';
 import { test as base, selectors, expect } from '@playwright/test';
 import { Selectors } from '../selectors/types';
 import { resolveSelectorVersion } from '../selectors/versionResolver';
 import { versionedComponents, versionedPages } from '../selectors/versioned';
 import { getCustomLocators } from '../customLocators';
 import { grafanaSelectorEngine } from './grafanaSelectorEngine';
-import { readProvision } from '../utils/readProvisioning';
 import { DataSourceConfigPage } from '../models/DataSourceConfigPage';
 import { DashboardPage } from '../models/DashboardPage';
 import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
@@ -13,21 +11,28 @@ import { VariableEditPage } from '../models/VariableEditPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
-import { GrafanaPage, ImportDashboardArgs, GotoDashboardArgs } from '../types';
+import { GrafanaPage } from '../types';
 import { ExplorePage } from '../models/ExplorePage';
 import { EditPanelPage } from 'src/models';
+import {
+  readProvisionCommand,
+  ImportDashboardArgs,
+  GotoDashboardArgs,
+  gotoDashboardCommand,
+  importDashboardCommand,
+} from './commands/';
 
 const authFile = 'playwright/.auth/user.json';
 const credentials = { user: 'admin', password: 'admin' };
 
-type PluginOptions = {
+selectors.register('selector', grafanaSelectorEngine);
+
+export type PluginOptions = {
   defaultCredentials: { user: string; password: string };
   selectorRegistration: void;
 };
 
-selectors.register('selector', grafanaSelectorEngine);
-
-type PluginFixture = {
+export type PluginFixture = {
   // Page objects
   grafanaPage: GrafanaPage;
   dataSourceConfigPage: DataSourceConfigPage;
@@ -42,7 +47,7 @@ type PluginFixture = {
   // Commands
   importDashboard: (args: ImportDashboardArgs) => Promise<DashboardPage>;
   gotoDashboard: (args: GotoDashboardArgs) => Promise<DashboardPage>;
-  readProvision<T = any>(path: string): Promise<T>;
+  readProvision<T = any>(args: ImportDashboardArgs): Promise<T>;
 };
 
 export const test = base.extend<PluginFixture & PluginOptions>({
@@ -101,43 +106,9 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     await explorePage.goto();
     await use(explorePage);
   },
-  readProvision: async ({}, use) => {
-    await use((path) => readProvision(process.cwd(), path));
-  },
-  gotoDashboard: async ({ request, grafanaPage, selectors, grafanaVersion }, use) => {
-    await use(async (args) => {
-      const dashboardPage = new DashboardPage(grafanaPage, request, selectors, grafanaVersion, expect, args.uid);
-      await dashboardPage.goto(args);
-      return dashboardPage;
-    });
-  },
-  importDashboard: async ({ request, grafanaPage, selectors, grafanaVersion }, use) => {
-    await use(async (args) => {
-      // todo: shold be async
-      let buffer = fs.readFileSync(process.cwd() + args.filePath);
-      const dashboard = JSON.parse(buffer.toString());
-      const importDashboardReq = await request.post('/api/dashboards/import', {
-        data: {
-          dashboard,
-          overwrite: true,
-          inputs: [],
-          folderId: 0,
-        },
-      });
-      expect(importDashboardReq.ok()).toBeTruthy();
-      const dashboardJson = await importDashboardReq.json();
-      const dashboardPage = new DashboardPage(
-        grafanaPage,
-        request,
-        selectors,
-        grafanaVersion,
-        expect,
-        dashboardJson.uid
-      );
-      await dashboardPage.goto();
-      return dashboardPage;
-    });
-  },
+  readProvision: readProvisionCommand,
+  gotoDashboard: gotoDashboardCommand,
+  importDashboard: importDashboardCommand,
 });
 
 export { expect, selectors } from '@playwright/test';

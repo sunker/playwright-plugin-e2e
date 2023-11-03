@@ -1,7 +1,7 @@
 import fs from 'fs';
 const lte = require('semver/functions/lte');
 import { test, expect, DashboardPage } from '../../src';
-import { request } from '@playwright/test';
+
 test.describe(() => {
   test.describe.configure({ mode: 'parallel' });
   test('add a clock panel in new dashboard and set time format to "12 hour"', async ({
@@ -38,8 +38,8 @@ test.describe(() => {
     grafanaVersion,
     readProvision,
   }, testInfo) => {
-    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath));
-    const dashboardJson = await readProvision('dashboards/clockpanel/clock-panel.json');
+    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Could not find dashboard file');
+    const dashboardJson = await readProvision({ filePath: 'dashboards/clockpanel/clock-panel.json' });
     const dashboardPage = await new DashboardPage(
       grafanaPage,
       request,
