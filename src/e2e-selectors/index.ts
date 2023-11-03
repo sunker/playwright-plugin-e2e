@@ -1,2 +1,2 @@
-export { resolveSelectorVersion } from './versionResolver';
-export { type Components, type Pages } from './types';
+export { resolveSelectors } from './resolver';
+export * from './types';

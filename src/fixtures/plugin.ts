@@ -1,5 +1,5 @@
 import { test as base, selectors, expect } from '@playwright/test';
-import { resolveSelectorVersion } from '../e2e-selectors/versionResolver';
+import { resolveSelectors } from '../e2e-selectors/resolver';
 import { versionedComponents, versionedPages } from '../e2e-selectors/versioned';
 import { grafanaSelectorEngine } from './grafanaSelectorEngine';
 import { AnnotationPage } from '../models/AnnotationPage';
@@ -59,7 +59,7 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     await use(grafanaVersion);
   },
   selectors: async ({ grafanaVersion }, use) => {
-    const selectors = resolveSelectorVersion(
+    const selectors = resolveSelectors(
       {
         components: versionedComponents,
         pages: versionedPages,

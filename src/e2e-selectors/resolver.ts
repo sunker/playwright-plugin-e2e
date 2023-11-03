@@ -40,7 +40,7 @@ const processSelectors = (
   return selectors;
 };
 
-export const resolveSelectorVersion = (versionedSelectors: VersionedSelectors, version: string): E2ESelectors => {
+export const resolveSelectors = (versionedSelectors: VersionedSelectors, version: string): E2ESelectors => {
   const selectors: E2ESelectors = {} as E2ESelectors;
   const s = processSelectors(selectors, versionedSelectors, version);
   return s;
