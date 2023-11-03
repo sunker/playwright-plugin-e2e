@@ -1,8 +1,8 @@
 var randomstring = require('randomstring');
 import { expect, TestFixture } from '@playwright/test';
-import { PluginFixture, PluginOptions } from '../fixtures/types';
 import { CreateDataSourceArgs, DataSource } from '../types';
 import { PlaywrightCombinedArgs } from './types';
+import { PluginOptions, PluginFixture } from '../pluginType';
 
 type CreateDataSourceViaAPICommand = TestFixture<
   (args: CreateDataSourceArgs) => Promise<DataSource>,

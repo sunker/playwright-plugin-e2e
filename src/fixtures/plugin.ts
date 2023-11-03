@@ -14,7 +14,7 @@ import {
   loginCommand,
   createDataSourceViaAPICommand,
 } from '../commands';
-import { PluginFixture, PluginOptions } from './types';
+import { PluginFixture, PluginOptions } from '../pluginType';
 
 selectors.register('selector', grafanaSelectorEngine);
 
