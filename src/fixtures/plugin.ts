@@ -9,21 +9,24 @@ import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
 import { GrafanaPage } from '../types';
 import { ExplorePage } from '../models/ExplorePage';
-import { readProvisionCommand, gotoDashboardCommand, importDashboardCommand, loginCommand } from './commands/';
+import { readProvisionCommand, gotoDashboardCommand, importDashboardCommand, loginCommand } from '../commands';
 import { PluginFixture, PluginOptions } from './types';
 
 selectors.register('selector', grafanaSelectorEngine);
 
 export const test = base.extend<PluginFixture & PluginOptions>({
   defaultCredentials: [{ user: 'admin', password: 'admin' }, { option: true }],
-  grafanaPage: async ({ request, page, defaultCredentials }, use) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+  grafanaPage: async ({ page }, use) => {
     const customLocators = getCustomLocators(page);
     const grafanaPage = Object.assign(page, customLocators) as GrafanaPage;
     await use(grafanaPage);
   },
-  grafanaVersion: async ({ grafanaPage }, use) => {
-    const grafanaVersion: string = await grafanaPage.evaluate('window.grafanaBootData.settings.buildInfo.version');
+  grafanaVersion: async ({ page }, use) => {
+    if (process.env.GRAFANA_VERSION) {
+      return await use(process.env.GRAFANA_VERSION);
+    }
+    await page.goto('/', { waitUntil: 'networkidle' });
+    const grafanaVersion: string = await page.evaluate('window.grafanaBootData.settings.buildInfo.version');
     await use(grafanaVersion);
   },
   selectors: async ({ grafanaVersion }, use) => {

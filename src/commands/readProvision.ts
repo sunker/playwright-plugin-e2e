@@ -2,9 +2,9 @@ import { promises } from 'fs';
 import { resolve as resolvePath } from 'path';
 import { parse as parseYml } from 'yaml';
 import { TestFixture } from '@playwright/test';
-import { PluginFixture, PluginOptions } from '../types';
+import { PluginFixture, PluginOptions } from '../fixtures/types';
+import { ReadProvisionArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
-import { ReadProvisionArgs } from '../../types';
 
 type ReadProvisionCommand = TestFixture<
   <T = any>(args: ReadProvisionArgs) => Promise<T>,

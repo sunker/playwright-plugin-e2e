@@ -1,5 +1,5 @@
-export { test, expect } from './fixtures/pluginFixture';
-export * from './fixtures/commands';
+export { test, expect } from './fixtures/plugin';
+export * from './commands';
 export * from './fixtures/types';
 export * from './models';
 export * from './selectors/types';

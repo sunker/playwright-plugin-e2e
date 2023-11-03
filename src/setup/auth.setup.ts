@@ -1,4 +1,4 @@
-import { test as setup } from '../fixtures/pluginFixture';
+import { test as setup } from '../fixtures/plugin';
 
 const authFile = 'playwright/.auth/user.json';
 

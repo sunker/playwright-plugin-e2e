@@ -1,9 +1,9 @@
 import { promises } from 'fs';
 import { expect, TestFixture } from '@playwright/test';
-import { DashboardPage } from '../../models/DashboardPage';
-import { PluginFixture, PluginOptions } from '../types';
+import { DashboardPage } from '../models/DashboardPage';
+import { PluginFixture, PluginOptions } from '../fixtures/types';
+import { ImportDashboardArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
-import { ImportDashboardArgs } from '../../types';
 
 type ImportDashboardCommand = TestFixture<
   (args: ImportDashboardArgs) => Promise<DashboardPage>,
