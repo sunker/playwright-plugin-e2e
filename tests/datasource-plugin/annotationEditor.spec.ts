@@ -20,7 +20,9 @@ test('annotation editor with provisioned ds', async ({
   grafanaVersion,
 }, testInfo) => {
   testInfo.skip(lte(grafanaVersion, '9.2.5'), 'Code Editor triggers one query per key down in Grafana 9.2.5 and below');
-  const ds = await readProvision<RedshiftProvision>('datasources/aws-redshift.yaml').then((res) => res.datasources[0]);
+  const ds = await readProvision<RedshiftProvision>({ filePath: 'datasources/aws-redshift.yaml' }).then(
+    (res) => res.datasources[0]
+  );
   await annotationEditPage.datasource.set(ds.name);
   await grafanaPage.waitForFunction(() => (window as any).monaco);
   await grafanaPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();

@@ -1,5 +1,4 @@
 import { Locator, Page } from '@playwright/test';
-import { TimeRangeConfig } from './models/TimeRange';
 
 export interface DataSource {
   id: number;

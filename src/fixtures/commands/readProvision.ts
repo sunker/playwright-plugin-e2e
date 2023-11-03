@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { resolve as resolvePath } from 'path';
 import { parse as parseYml } from 'yaml';
 import { TestFixture } from '@playwright/test';
-import { PluginFixture, PluginOptions } from '../pluginFixture';
+import { PluginFixture, PluginOptions } from '../types';
 import { PlaywrightCombinedArgs, ReadProvisionArgs } from './types';
 
 type ReadProvisionCommand = TestFixture<

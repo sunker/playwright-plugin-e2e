@@ -6,6 +6,7 @@ export class TimeSeriesPanel {
   constructor(
     private readonly grafanaPage: GrafanaPage,
     private readonly selectors: Selectors,
+    // @ts-ignore
     private readonly grafanaVersion: string,
     private readonly expect: Expect<any>
   ) {}
