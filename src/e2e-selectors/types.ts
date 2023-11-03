@@ -1,6 +1,6 @@
 import { versionedComponents, versionedPages } from './versioned';
 
-export type Selectors = {
+export type E2ESelectors = {
   pages: Pages;
   components: Components;
 };

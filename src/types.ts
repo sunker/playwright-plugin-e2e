@@ -1,7 +1,7 @@
 import { Locator, PlaywrightTestArgs } from '@playwright/test';
-import { Selectors } from './selectors/types';
+import { E2ESelectors } from './e2e-selectors/types';
 
-export type PluginTestArgs = { grafanaVersion: string; selectors: Selectors } & Pick<
+export type PluginTestArgs = { grafanaVersion: string; selectors: E2ESelectors } & Pick<
   PlaywrightTestArgs,
   'page' | 'request'
 >;

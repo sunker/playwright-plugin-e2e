@@ -1,10 +1,10 @@
 const semver = require('semver');
-import { Selectors, VersionedSelectors } from './types';
+import { E2ESelectors, VersionedSelectors } from './types';
 const processSelectors = (
-  selectors: Selectors,
+  selectors: E2ESelectors,
   versionedSelectors: VersionedSelectors,
   grafanaVersion: string
-): Selectors => {
+): E2ESelectors => {
   const keys = Object.keys(versionedSelectors);
   for (let index = 0; index < keys.length; index++) {
     const key = keys[index];
@@ -40,8 +40,8 @@ const processSelectors = (
   return selectors;
 };
 
-export const resolveSelectorVersion = (versionedSelectors: VersionedSelectors, version: string): Selectors => {
-  const selectors: Selectors = {} as Selectors;
+export const resolveSelectorVersion = (versionedSelectors: VersionedSelectors, version: string): E2ESelectors => {
+  const selectors: E2ESelectors = {} as E2ESelectors;
   const s = processSelectors(selectors, versionedSelectors, version);
   return s;
 };

@@ -1,6 +1,6 @@
 import { test as base, selectors, expect } from '@playwright/test';
-import { resolveSelectorVersion } from '../selectors/versionResolver';
-import { versionedComponents, versionedPages } from '../selectors/versioned';
+import { resolveSelectorVersion } from '../e2e-selectors/versionResolver';
+import { versionedComponents, versionedPages } from '../e2e-selectors/versioned';
 import { grafanaSelectorEngine } from './grafanaSelectorEngine';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
@@ -11,7 +11,7 @@ import { DashboardPage } from '../models/DashboardPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { EditPanelPage } from '../models/EditPanelPage';
 import { ExplorePage } from '../models/ExplorePage';
-import { Selectors } from '../selectors/types';
+import { E2ESelectors } from '../e2e-selectors/types';
 import { ImportDashboardArgs, GotoDashboardArgs, LoginArgs, DataSource, CreateDataSourceArgs } from '../types';
 
 import {
@@ -32,7 +32,7 @@ export type PluginOptions = {
 
 export type PluginFixture = {
   grafanaVersion: string;
-  selectors: Selectors;
+  selectors: E2ESelectors;
   // fixtures resolving page object models
   dataSourceConfigPage: DataSourceConfigPage;
   emptyDashboardPage: EmptyDashboardPage;
