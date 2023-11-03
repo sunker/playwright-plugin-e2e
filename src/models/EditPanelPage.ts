@@ -33,6 +33,30 @@ export class EditPanelPage {
       .click();
   }
 
+  getVisualizationName() {
+    return this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.PanelEditor.toggleVizPicker);
+  }
+
+  async setPanelTitle(title: string) {
+    const isVisible = await this.grafanaPage
+      .getByTestIdOrAriaLabel(this.selectors.components.OptionsGroup.group('Panel options'))
+      .locator('input')
+      .first()
+      .isVisible();
+    if (!isVisible) {
+      // expand panel options if not visible
+      await this.grafanaPage
+        .getByTestIdOrAriaLabel(this.selectors.components.OptionsGroup.group('Panel options'))
+        .locator('button')
+        .click();
+    }
+    await this.grafanaPage
+      .getByTestIdOrAriaLabel(this.selectors.components.OptionsGroup.group('Panel options'))
+      .locator('input')
+      .first()
+      .fill(title);
+  }
+
   async apply() {
     await this.grafanaPage.getByTestId(this.selectors.components.PanelEditor.applyButton).click();
   }

@@ -243,7 +243,10 @@ export type Components = {
   BackButton: {
     backArrow: string;
   };
-  OptionsGroup: {};
+  OptionsGroup: {
+    group: (title?: string) => string;
+    toggle: (title?: string) => string;
+  };
   PluginVisualization: {
     current: string;
     item: (title: string) => string;

@@ -1,4 +1,3 @@
-const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
 import { GrafanaPage } from '../types';
 import { Selectors } from '../selectors/types';

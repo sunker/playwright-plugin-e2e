@@ -11,7 +11,7 @@
     "./package.json"
   ],
   "scripts": {
-    "grafana": "docker-compose up",
+    "server": "docker-compose up --build",
     "update": "npm version patch --force && yarn build && npm pack",
     "dev": "yarn bundle -w",
     "build": "tsc -p ./tsconfig.json && rollup -c rollup.config.ts",

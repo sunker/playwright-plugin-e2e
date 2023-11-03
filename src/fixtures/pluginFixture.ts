@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { test as base, selectors, expect } from '@playwright/test';
 import { Selectors } from '../selectors/types';
 import { resolveSelectorVersion } from '../selectors/versionResolver';
@@ -12,7 +13,7 @@ import { VariableEditPage } from '../models/VariableEditPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
-import { GrafanaPage } from '../types';
+import { GrafanaPage, ImportDashboardArgs, GotoDashboardArgs } from '../types';
 import { ExplorePage } from '../models/ExplorePage';
 import { EditPanelPage } from 'src/models';
 
@@ -27,17 +28,20 @@ type PluginOptions = {
 selectors.register('selector', grafanaSelectorEngine);
 
 type PluginFixture = {
+  // Page objects
   grafanaPage: GrafanaPage;
   dataSourceConfigPage: DataSourceConfigPage;
   grafanaVersion: string;
   selectors: Selectors;
-  importDashboard: (path: string) => Promise<DashboardPage>;
   emptyDashboardPage: EmptyDashboardPage;
   variableEditPage: VariableEditPage;
   annotationEditPage: AnnotationEditPage;
   emptyEditPanelPage: EditPanelPage;
   selectorRegistration: any;
   explorePage: ExplorePage;
+  // Commands
+  importDashboard: (args: ImportDashboardArgs) => Promise<DashboardPage>;
+  gotoDashboard: (args: GotoDashboardArgs) => Promise<DashboardPage>;
   readProvision<T = any>(path: string): Promise<T>;
 };
 
@@ -99,6 +103,40 @@ export const test = base.extend<PluginFixture & PluginOptions>({
   },
   readProvision: async ({}, use) => {
     await use((path) => readProvision(process.cwd(), path));
+  },
+  gotoDashboard: async ({ request, grafanaPage, selectors, grafanaVersion }, use) => {
+    await use(async (args) => {
+      const dashboardPage = new DashboardPage(grafanaPage, request, selectors, grafanaVersion, expect, args.uid);
+      await dashboardPage.goto(args);
+      return dashboardPage;
+    });
+  },
+  importDashboard: async ({ request, grafanaPage, selectors, grafanaVersion }, use) => {
+    await use(async (args) => {
+      // todo: shold be async
+      let buffer = fs.readFileSync(process.cwd() + args.filePath);
+      const dashboard = JSON.parse(buffer.toString());
+      const importDashboardReq = await request.post('/api/dashboards/import', {
+        data: {
+          dashboard,
+          overwrite: true,
+          inputs: [],
+          folderId: 0,
+        },
+      });
+      expect(importDashboardReq.ok()).toBeTruthy();
+      const dashboardJson = await importDashboardReq.json();
+      const dashboardPage = new DashboardPage(
+        grafanaPage,
+        request,
+        selectors,
+        grafanaVersion,
+        expect,
+        dashboardJson.uid
+      );
+      await dashboardPage.goto();
+      return dashboardPage;
+    });
   },
 });
 
