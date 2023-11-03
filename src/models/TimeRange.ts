@@ -1,12 +1,6 @@
 import { Expect } from '@playwright/test';
-import { Selectors } from 'src/selectors/types';
-import { GrafanaPage } from 'src/types';
-
-export interface TimeRangeConfig {
-  from: string;
-  to: string;
-  zone?: string;
-}
+import { Selectors } from '../selectors/types';
+import { GrafanaPage, TimeRangeArgs } from '../types';
 
 export class TimeRange {
   constructor(
@@ -17,7 +11,7 @@ export class TimeRange {
     private readonly expect: Expect<any>
   ) {}
 
-  async set({ from, to, zone }: TimeRangeConfig) {
+  async set({ from, to, zone }: TimeRangeArgs) {
     // await this.grafanaPage.getByTestIdOrAriaLabel(this.selectors.components.TimePicker.openButton).click();
     //TODO: investigate why above doesn't work
     await this.grafanaPage.locator('[aria-controls="TimePickerContent"]').click();

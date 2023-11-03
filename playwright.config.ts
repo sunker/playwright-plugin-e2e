@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { PluginOptions } from './src/fixtures/types';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -11,7 +12,7 @@ dotenv.config();
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+export default defineConfig<PluginOptions>({
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -36,11 +37,6 @@ export default defineConfig({
   projects: [
     // Setup project
     // {
-    //   name: 'authenticate',
-    //   testDir: 'src/setup/',
-    //   testMatch: [/.*\.setup\.ts/],
-    // },
-    // {
     //   name: 'createDataSource',
     //   testMatch: /.*configEditor\.spec\.ts/,
     //   dependencies: ['authenticate'],
@@ -49,13 +45,17 @@ export default defineConfig({
     //     storageState: 'playwright/.auth/user.json',
     //   },
     // },
+    // {
+    //   name: 'setup',
+    //   testMatch: [/configEditor\.spec\.ts/],
+    //   use: {
+    //     storageState: 'playwright/.auth/user.json',
+    //   },
+    //   dependencies: ['authenticate'],
+    // },
     {
-      name: 'setup',
-      testMatch: [/configEditor\.spec\.ts/],
-      use: {
-        storageState: 'playwright/.auth/user.json',
-      },
-      // dependencies: ['authenticate'],
+      name: 'authenticate',
+      testMatch: [/.*auth\.setup\.ts/],
     },
     {
       name: 'chromium',
@@ -64,7 +64,7 @@ export default defineConfig({
         storageState: 'playwright/.auth/user.json',
       },
       // dependencies: ['authenticate', 'createDataSource'],
-      // dependencies: ['authenticate'],
+      dependencies: ['authenticate'],
     },
 
     // {

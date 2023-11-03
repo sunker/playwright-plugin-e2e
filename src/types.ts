@@ -40,3 +40,64 @@ export type Visualization =
   | 'Text'
   | 'Time series'
   | 'Worldmap Panel';
+
+export type GotoDashboardArgs = {
+  /**
+   * The uid of the dashboard to go to
+   */
+  uid?: string;
+  /**
+   * The time range to set
+   */
+  timeRange?: TimeRangeArgs;
+  /**
+   * Query parameters to add to the url
+   */
+  queryParams?: URLSearchParams;
+};
+
+export type ImportDashboardArgs = {
+  /**
+   * The path, relative to project root, to the dashboard json file
+   */
+  filePath: string;
+};
+
+export type ReadProvisionArgs = {
+  /**
+   * The path, relative to the provisioning folder, to the dashboard json file
+   */
+  filePath: string;
+};
+
+export type LoginArgs = {
+  /**
+   * The username to login with
+   */
+  username: string;
+  /**
+   * The password to login with
+   */
+  password: string;
+};
+
+export interface TimeRangeArgs {
+  /**
+   * The from time
+   * @example 'now-6h'
+   * @example '2020-01-01 00:00:00'
+   */
+  from: string;
+  /**
+   * The to time
+   * @example 'now'
+   * @example '2020-01-01 00:00:00'
+   */
+  to: string;
+  /**
+   * The time zone
+   * @example 'utc'
+   * @example 'browser'
+   */
+  zone?: string;
+}

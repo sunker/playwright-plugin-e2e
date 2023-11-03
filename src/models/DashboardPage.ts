@@ -2,12 +2,11 @@ const gte = require('semver/functions/gte');
 
 import { Expect, type APIRequestContext } from '@playwright/test';
 import { Selectors } from '../selectors/types';
-import { GrafanaPage } from '../types';
+import { GrafanaPage, GotoDashboardArgs } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { EditPanelPage } from './EditPanelPage';
 import { VariablePage } from './VariablePage';
 import { TimeRange } from './TimeRange';
-import { GotoDashboardArgs } from '../fixtures/commands/types';
 
 export class DashboardPage {
   dataSourcePicker: any;
