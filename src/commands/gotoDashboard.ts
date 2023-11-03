@@ -11,7 +11,7 @@ type GotoDashboardCommand = TestFixture<
 
 export const gotoDashboardCommand: GotoDashboardCommand = async ({ request, page, selectors, grafanaVersion }, use) => {
   await use(async (args) => {
-    const dashboardPage = new DashboardPage(page, selectors, grafanaVersion, expect, request, args.uid);
+    const dashboardPage = new DashboardPage({ request, page, selectors, grafanaVersion }, expect, args.uid);
     await dashboardPage.goto(args);
     return dashboardPage;
   });

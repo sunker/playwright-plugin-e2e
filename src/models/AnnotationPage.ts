@@ -1,21 +1,21 @@
-import { Expect, Page } from '@playwright/test';
-import { Selectors } from '../selectors/types';
+import { Expect } from '@playwright/test';
 import { AnnotationEditPage } from './AnnotationEditPage';
 import { GrafanaPage } from './GrafanaPage';
+import { PluginTestArgs } from '../pluginType';
 
 export class AnnotationPage extends GrafanaPage {
-  constructor(page: Page, selectors: Selectors, grafanaVersion: string, expect: Expect<any>) {
-    super(page, selectors, grafanaVersion, expect);
+  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+    super(testCtx, expect);
   }
 
   async goto() {
-    await this.page.goto('/dashboard/new?orgId=1&editview=annotations', {
+    await this.testCtx.page.goto('/dashboard/new?orgId=1&editview=annotations', {
       waitUntil: 'networkidle',
     });
   }
 
   async clickAddNew() {
-    const { Dashboard } = this.selectors.pages;
+    const { Dashboard } = this.testCtx.selectors.pages;
     try {
       const ctaSelector = this.getByTestIdOrAriaLabel(Dashboard.Settings.Annotations.List.addAnnotationCTAV2);
       await ctaSelector.waitFor({ timeout: 2000 });
@@ -24,6 +24,6 @@ export class AnnotationPage extends GrafanaPage {
       this.getByTestIdOrAriaLabel(Dashboard.Settings.Annotations.List.addAnnotationCTA);
     }
 
-    return new AnnotationEditPage(this.page, this.selectors, this.grafanaVersion, this.expect);
+    return new AnnotationEditPage(this.testCtx, this.expect);
   }
 }

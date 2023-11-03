@@ -40,7 +40,11 @@ test.describe(() => {
   }, testInfo) => {
     testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Could not find dashboard file');
     const dashboardJson = await readProvision({ filePath: 'dashboards/clockpanel/clock-panel.json' });
-    const dashboardPage = await new DashboardPage(page, selectors, grafanaVersion, expect, request, dashboardJson.uid);
+    const dashboardPage = await new DashboardPage(
+      { page, selectors, grafanaVersion, request },
+      expect,
+      dashboardJson.uid
+    );
     const editPanelPage = await dashboardPage.gotoEditPanelPage('5');
     await expect(editPanelPage.getVisualizationName()).toHaveText('Clock');
     await editPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();

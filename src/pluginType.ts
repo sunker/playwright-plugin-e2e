@@ -32,4 +32,5 @@ export type PluginFixture = {
   readProvision<T = any>(args: ImportDashboardArgs): Promise<T>;
 };
 
-export type PluginTestArgs = PluginFixture & PluginOptions & PlaywrightTestArgs;
+export type PluginTestArgs = Pick<PluginFixture, 'grafanaVersion' | 'selectors'> &
+  Pick<PlaywrightTestArgs, 'page' | 'request'>;

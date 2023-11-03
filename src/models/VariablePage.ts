@@ -1,22 +1,21 @@
-import { Expect, Page } from '@playwright/test';
-
-import { Selectors } from '../selectors/types';
+import { Expect } from '@playwright/test';
 import { VariableEditPage } from './VariableEditPage';
 import { GrafanaPage } from './GrafanaPage';
+import { PluginTestArgs } from '../pluginType';
 
 export class VariablePage extends GrafanaPage {
-  constructor(page: Page, selectors: Selectors, grafanaVersion: string, expect: Expect<any>) {
-    super(page, selectors, grafanaVersion, expect);
+  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+    super(testCtx, expect);
   }
 
   async goto() {
-    await this.page.goto('dashboard/new?orgId=1&editview=templating', {
+    await this.testCtx.page.goto('dashboard/new?orgId=1&editview=templating', {
       waitUntil: 'networkidle',
     });
   }
 
   async clickAddNew() {
-    const { Dashboard } = this.selectors.pages;
+    const { Dashboard } = this.testCtx.selectors.pages;
     try {
       const ctaSelector = this.getByTestIdOrAriaLabel(
         Dashboard.Settings.Variables.List.addVariableCTAV2('Add variable')
@@ -27,11 +26,11 @@ export class VariablePage extends GrafanaPage {
       await this.getByTestIdOrAriaLabel(Dashboard.Settings.Variables.List.newButton).click();
     }
 
-    return new VariableEditPage(this.page, this.selectors, this.grafanaVersion, this.expect);
+    return new VariableEditPage(this.testCtx, this.expect);
   }
 
   // not implemented
   async clickEditVariable(variableName: string) {
-    return new VariableEditPage(this.page, this.selectors, this.grafanaVersion, this.expect);
+    return new VariableEditPage(this.testCtx, this.expect);
   }
 }

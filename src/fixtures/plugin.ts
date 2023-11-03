@@ -38,19 +38,19 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     );
     await use(selectors);
   },
-  annotationEditPage: async ({ page, selectors, grafanaVersion }, use) => {
-    const annotationPage = new AnnotationPage(page, selectors, grafanaVersion, expect);
+  annotationEditPage: async ({ page, selectors, grafanaVersion, request }, use) => {
+    const annotationPage = new AnnotationPage({ page, selectors, grafanaVersion, request }, expect);
     await annotationPage.goto();
     const annotationEditPage = await annotationPage.clickAddNew();
     await use(annotationEditPage);
   },
   dataSourceConfigPage: async ({ request, page, grafanaVersion, selectors }, use) => {
-    const configPage = new DataSourceConfigPage(page, selectors, grafanaVersion, expect, request);
+    const configPage = new DataSourceConfigPage({ page, selectors, grafanaVersion, request }, expect);
     await use(configPage);
     // await configPage.deleteDataSource();
   },
   emptyDashboardPage: async ({ page, request, selectors, grafanaVersion }, use) => {
-    const emptyDashboardPage = new EmptyDashboardPage(page, request, selectors, grafanaVersion, expect);
+    const emptyDashboardPage = new EmptyDashboardPage({ page, selectors, grafanaVersion, request }, expect);
     await emptyDashboardPage.goto();
     await use(emptyDashboardPage);
   },
@@ -58,14 +58,14 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     const editPanelPage = await emptyDashboardPage.addPanel();
     await use(editPanelPage);
   },
-  variableEditPage: async ({ page, selectors, grafanaVersion }, use) => {
-    const variablePage = new VariablePage(page, selectors, grafanaVersion, expect);
+  variableEditPage: async ({ page, selectors, grafanaVersion, request }, use) => {
+    const variablePage = new VariablePage({ page, selectors, grafanaVersion, request }, expect);
     await variablePage.goto();
     const variableEditPage = await variablePage.clickAddNew();
     await use(variableEditPage);
   },
-  explorePage: async ({ page, selectors, grafanaVersion }, use) => {
-    const explorePage = new ExplorePage(page, selectors, grafanaVersion, expect);
+  explorePage: async ({ page, selectors, grafanaVersion, request }, use) => {
+    const explorePage = new ExplorePage({ page, selectors, grafanaVersion, request }, expect);
     await explorePage.goto();
     await use(explorePage);
   },

@@ -1,21 +1,14 @@
-import { Expect, type APIRequestContext, Page } from '@playwright/test';
-import { Selectors } from '../selectors/types';
-
+import { Expect } from '@playwright/test';
 import { DashboardPage } from './DashboardPage';
+import { PluginTestArgs } from '../pluginType';
 
 export class EmptyDashboardPage extends DashboardPage {
-  constructor(
-    page: Page,
-    request: APIRequestContext,
-    selectors: Selectors,
-    grafanaVersion: string,
-    expect: Expect<any>
-  ) {
-    super(page, selectors, grafanaVersion, expect, request);
+  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+    super(testCtx, expect);
   }
 
   async goto() {
-    await this.page.goto(this.selectors.pages.AddDashboard.url, {
+    await this.testCtx.page.goto(this.testCtx.selectors.pages.AddDashboard.url, {
       waitUntil: 'networkidle',
     });
   }
