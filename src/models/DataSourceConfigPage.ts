@@ -1,10 +1,8 @@
 const gte = require('semver/functions/gte');
-var randomstring = require('randomstring');
 import { Expect } from '@playwright/test';
-import { DataSource } from '../types';
-import { createDataSource } from '../utils';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
+import { createDataSourceViaAPI } from 'src/commands/createDataSource';
 
 export class DataSourceConfigPage extends GrafanaPage {
   datasourceJson: any;
@@ -14,10 +12,7 @@ export class DataSourceConfigPage extends GrafanaPage {
   }
 
   async createDataSource(type: string, name?: string) {
-    this.datasourceJson = await createDataSource(this.testCtx.request, {
-      type,
-      name: name ?? `${type}-${randomstring.generate()}`,
-    } as DataSource);
+    await createDataSourceViaAPI(this.testCtx.request, { type, name });
     await this.goto();
   }
 

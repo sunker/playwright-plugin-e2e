@@ -7,7 +7,7 @@ import { EditPanelPage } from './EditPanelPage';
 import { VariablePage } from './VariablePage';
 import { TimeRange } from './TimeRange';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from 'src/pluginType';
+import { PluginTestArgs } from '../types';
 
 export class DashboardPage extends GrafanaPage {
   dataSourcePicker: any;

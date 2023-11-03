@@ -1,6 +1,6 @@
 import { Expect } from '@playwright/test';
 import { DashboardPage } from './DashboardPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export class EmptyDashboardPage extends DashboardPage {
   constructor(testCtx: PluginTestArgs, expect: Expect<any>) {

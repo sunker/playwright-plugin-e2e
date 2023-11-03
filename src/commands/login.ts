@@ -1,5 +1,5 @@
 import { expect, TestFixture } from '@playwright/test';
-import { PluginOptions, PluginFixture } from '../pluginType';
+import { PluginOptions, PluginFixture } from '../fixtures/plugin';
 import { LoginArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
 

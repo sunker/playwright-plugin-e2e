@@ -2,7 +2,7 @@ import { Expect } from '@playwright/test';
 import { DataSourcePicker } from './DataSourcePicker';
 
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 

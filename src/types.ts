@@ -1,10 +1,16 @@
-import { Locator } from '@playwright/test';
+import { Locator, PlaywrightTestArgs } from '@playwright/test';
+import { Selectors } from './selectors/types';
+
+export type PluginTestArgs = { grafanaVersion: string; selectors: Selectors } & Pick<
+  PlaywrightTestArgs,
+  'page' | 'request'
+>;
 
 export interface DataSource {
   id?: number;
   uid?: string;
   orgId?: number;
-  name: string;
+  name?: string;
   type: string;
   access?: string;
   url?: string;
@@ -17,10 +23,6 @@ export interface DataSource {
 export interface Dashboard {
   uid: string;
 }
-
-// export interface Page extends Page {
-//   getByTestIdOrAriaLabel(selector: string): Locator;
-// }
 
 export interface GrafanaLocator extends Locator {
   getByTestIdOrAriaLabel(selector: string): GrafanaLocator;

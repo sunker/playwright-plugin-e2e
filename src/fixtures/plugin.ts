@@ -2,11 +2,18 @@ import { test as base, selectors, expect } from '@playwright/test';
 import { resolveSelectorVersion } from '../selectors/versionResolver';
 import { versionedComponents, versionedPages } from '../selectors/versioned';
 import { grafanaSelectorEngine } from './grafanaSelectorEngine';
-import { DataSourceConfigPage } from '../models/DataSourceConfigPage';
-import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
+import { DataSourceConfigPage } from '../models/DataSourceConfigPage';
+import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
+import { VariableEditPage } from '../models/VariableEditPage';
+import { DashboardPage } from '../models/DashboardPage';
+import { AnnotationEditPage } from '../models/AnnotationEditPage';
+import { EditPanelPage } from '../models/EditPanelPage';
 import { ExplorePage } from '../models/ExplorePage';
+import { Selectors } from '../selectors/types';
+import { ImportDashboardArgs, GotoDashboardArgs, LoginArgs, DataSource, CreateDataSourceArgs } from '../types';
+
 import {
   readProvisionCommand,
   gotoDashboardCommand,
@@ -14,9 +21,32 @@ import {
   loginCommand,
   createDataSourceViaAPICommand,
 } from '../commands';
-import { PluginFixture, PluginOptions } from '../pluginType';
+// import { PluginFixture, PluginOptions } from '../pluginType';
 
 selectors.register('selector', grafanaSelectorEngine);
+
+export type PluginOptions = {
+  defaultCredentials?: { user: string; password: string };
+  selectorRegistration: void;
+};
+
+export type PluginFixture = {
+  grafanaVersion: string;
+  selectors: Selectors;
+  // fixtures resolving page object models
+  dataSourceConfigPage: DataSourceConfigPage;
+  emptyDashboardPage: EmptyDashboardPage;
+  variableEditPage: VariableEditPage;
+  annotationEditPage: AnnotationEditPage;
+  emptyEditPanelPage: EditPanelPage;
+  explorePage: ExplorePage;
+  // command fixtures
+  login: (args?: LoginArgs) => Promise<void>;
+  createDataSource: (args: CreateDataSourceArgs) => Promise<DataSource>;
+  importDashboard: (args: ImportDashboardArgs) => Promise<DashboardPage>;
+  gotoDashboard: (args: GotoDashboardArgs) => Promise<DashboardPage>;
+  readProvision<T = any>(args: ImportDashboardArgs): Promise<T>;
+};
 
 export const test = base.extend<PluginFixture & PluginOptions>({
   defaultCredentials: [{ user: 'admin', password: 'admin' }, { option: true }],

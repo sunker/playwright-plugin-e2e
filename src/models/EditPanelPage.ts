@@ -6,7 +6,7 @@ import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { TimeSeriesPanel } from './TimeSeriesPanel';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export class EditPanelPage extends GrafanaPage {
   datasource: DataSourcePicker;

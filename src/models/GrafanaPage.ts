@@ -1,5 +1,5 @@
 import { Expect, Locator } from '@playwright/test';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export abstract class GrafanaPage {
   constructor(protected readonly testCtx: PluginTestArgs, protected readonly expect: Expect<any>) {}

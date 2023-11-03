@@ -5,7 +5,7 @@ import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { attachCustomLocators } from '../utils/locator';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export class ExplorePage extends GrafanaPage {
   datasource: DataSourcePicker;

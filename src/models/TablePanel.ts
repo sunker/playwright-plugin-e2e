@@ -1,7 +1,7 @@
 const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../pluginType';
+import { PluginTestArgs } from '../types';
 
 export class TablePanel extends GrafanaPage {
   constructor(testCtx: PluginTestArgs, expect: Expect<any>) {

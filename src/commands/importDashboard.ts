@@ -1,7 +1,7 @@
 import { promises } from 'fs';
 import { expect, TestFixture } from '@playwright/test';
 import { DashboardPage } from '../models/DashboardPage';
-import { PluginOptions, PluginFixture } from '../pluginType';
+import { PluginOptions, PluginFixture } from '../fixtures/plugin';
 import { Dashboard, ImportDashboardArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
 
