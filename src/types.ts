@@ -76,17 +76,6 @@ export type ReadProvisionArgs = {
   filePath: string;
 };
 
-export type LoginArgs = {
-  /**
-   * The username to login with
-   */
-  username: string;
-  /**
-   * The password to login with
-   */
-  password: string;
-};
-
 export interface TimeRangeArgs {
   /**
    * The from time
