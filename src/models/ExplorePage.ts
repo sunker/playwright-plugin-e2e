@@ -3,7 +3,7 @@ import { GrafanaLocator } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
-import { attachCustomLocators } from '../utils/locator';
+import { attachCustomLocators } from '../locator';
 import { GrafanaPage } from './GrafanaPage';
 import { PluginTestArgs } from '../types';
 

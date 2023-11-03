@@ -12,7 +12,7 @@ export class DataSourcePicker extends GrafanaPage {
       .locator('input')
       .fill(name);
 
-    // nasty hack to get the selection to work in 10.ish versions of Grafana. needs to be fixed properly
+    // hack to get the selection to work in 10.ish versions of Grafana. needs to be fixed properly
     await this.testCtx.page.keyboard.press('ArrowDown');
     await this.testCtx.page.keyboard.press('ArrowUp');
     await this.testCtx.page.keyboard.press('Enter');

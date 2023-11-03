@@ -11,7 +11,7 @@ export const loginCommand: LoginCommand = async ({ request, httpCredentials }, u
     console.log(httpCredentials);
     const data = httpCredentials ? { ...httpCredentials, user: 'admin' } : { user: 'admin', password: 'admin' };
     const loginReq = await request.post('/login', { data });
-    const text = await await loginReq.text();
+    const text = await loginReq.text();
     expect.soft(loginReq.ok(), `Could not log in to Grafana: ${text}`).toBeTruthy();
     await request.storageState({ path: authFile });
   });

@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test';
-import { GrafanaLocator } from '../types';
+import { GrafanaLocator } from './types';
 
 const getCustomLocators = (locator: Locator) => {
   return {

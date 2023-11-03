@@ -4,7 +4,7 @@ import { ds } from './datasource';
 import { RedshiftProvision } from './types';
 
 test.skip('annotation editor with existing ds', async ({ annotationEditPage, page, selectors }) => {
-  await annotationEditPage.datasource.set(ds.name);
+  await annotationEditPage.datasource.set(ds.name!);
   await page.waitForFunction(() => (window as any).monaco);
   await annotationEditPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
   await page.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');

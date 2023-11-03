@@ -25,7 +25,8 @@ export const importDashboardCommand: ImportDashboardCommand = async (
         folderId: 0,
       },
     });
-    expect(importDashboardReq.ok()).toBeTruthy();
+    const text = await await importDashboardReq.text();
+    expect.soft(importDashboardReq.ok(), `Failed to import dashboard: ${text}`).toBeTruthy();
     const dashboardJson: Dashboard = await importDashboardReq.json();
     const dashboardPage = new DashboardPage({ request, page, selectors, grafanaVersion }, expect, dashboardJson.uid);
     await dashboardPage.goto();

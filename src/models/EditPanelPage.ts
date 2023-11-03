@@ -1,7 +1,7 @@
 import { Expect } from '@playwright/test';
 import { GrafanaLocator, Visualization } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
-import { attachCustomLocators } from '../utils/locator';
+import { attachCustomLocators } from '../locator';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { TimeSeriesPanel } from './TimeSeriesPanel';
