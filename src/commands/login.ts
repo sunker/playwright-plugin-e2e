@@ -10,9 +10,12 @@ type LoginCommand = TestFixture<
   PluginFixture & PluginOptions & PlaywrightCombinedArgs
 >;
 
-export const loginCommand: LoginCommand = async ({ request, defaultCredentials }, use) => {
+export const loginCommand: LoginCommand = async (
+  { request, httpCredentials = { user: 'admin', password: 'admin' } },
+  use
+) => {
   await use(async (args) => {
-    const loginReq = await request.post('/login', { data: args ?? defaultCredentials });
+    const loginReq = await request.post('/login', { data: defaultCredentials });
     const text = await await loginReq.text();
     expect.soft(loginReq.ok(), `Could not log in to Grafana: ${text}`).toBeTruthy();
     await request.storageState({ path: authFile });

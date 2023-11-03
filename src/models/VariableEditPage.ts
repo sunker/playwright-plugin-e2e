@@ -13,19 +13,6 @@ export class VariableEditPage extends GrafanaPage {
     this.datasource = new DataSourcePicker(testCtx, expect);
   }
 
-  async fillGeneralFields(type: VariableType) {
-    await this.getByTestIdOrAriaLabel(
-      this.testCtx.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2
-    )
-      .locator('input')
-      .fill(type);
-    await this.testCtx.page.keyboard.press('ArrowDown');
-    await this.testCtx.page.keyboard.press('Enter');
-    await this.getByTestIdOrAriaLabel(
-      this.testCtx.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2
-    ).scrollIntoViewIfNeeded();
-  }
-
   async setVariableType(type: VariableType) {
     await this.getByTestIdOrAriaLabel(
       this.testCtx.selectors.pages.Dashboard.Settings.Variables.Edit.General.generalTypeSelectV2

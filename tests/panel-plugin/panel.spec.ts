@@ -3,6 +3,7 @@ const lte = require('semver/functions/lte');
 import { test, expect, DashboardPage } from '../../src';
 
 test.describe(() => {
+  test.use({ httpCredentials: { username: 'admin', password: 'admin' } });
   test.describe.configure({ mode: 'parallel' });
   test('add a clock panel in new dashboard and set time format to "12 hour"', async ({
     emptyEditPanelPage,
