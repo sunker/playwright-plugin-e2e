@@ -9,3 +9,5 @@ node_modules/
 /package
 .env
 .DS_STORE
+
+launch.json

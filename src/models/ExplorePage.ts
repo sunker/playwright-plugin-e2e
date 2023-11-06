@@ -5,13 +5,13 @@ import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { attachCustomLocators } from '../locator';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../types';
+import { PluginTestCtx } from '../types';
 
 export class ExplorePage extends GrafanaPage {
   datasource: DataSourcePicker;
   tablePanel: TablePanel;
   timeRange: any;
-  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+  constructor(testCtx: PluginTestCtx, expect: Expect<any>) {
     super(testCtx, expect);
     this.datasource = new DataSourcePicker(testCtx, expect);
     this.tablePanel = new TablePanel(testCtx, this.expect);

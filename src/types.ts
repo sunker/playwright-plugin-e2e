@@ -1,11 +1,17 @@
 import { Locator, PlaywrightTestArgs } from '@playwright/test';
 import { E2ESelectors } from './e2e-selectors/types';
 
-export type PluginTestArgs = { grafanaVersion: string; selectors: E2ESelectors } & Pick<
+/**
+ * The context object passed to page object models
+ */
+export type PluginTestCtx = { grafanaVersion: string; selectors: E2ESelectors } & Pick<
   PlaywrightTestArgs,
   'page' | 'request'
 >;
 
+/**
+ * The data source object
+ */
 export interface DataSource {
   id?: number;
   uid?: string;
@@ -20,14 +26,23 @@ export interface DataSource {
   secureJsonData?: any;
 }
 
+/**
+ * The dashboard object
+ */
 export interface Dashboard {
   uid: string;
 }
 
+/**
+ * GrafanaLocator extends Playwright's Locator with additional Grafana specific methods
+ */
 export interface GrafanaLocator extends Locator {
   getByTestIdOrAriaLabel(selector: string): GrafanaLocator;
 }
 
+/**
+ * Panel visualization types
+ */
 export type Visualization =
   | 'Alert list'
   | 'Bar gauge'
@@ -98,5 +113,8 @@ export interface TimeRangeArgs {
 }
 
 export type CreateDataSourceArgs = {
+  /**
+   * The data source to create
+   */
   datasource: DataSource;
 };

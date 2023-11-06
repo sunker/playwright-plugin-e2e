@@ -1,7 +1,7 @@
 import { test as base, selectors, expect } from '@playwright/test';
 import { resolveSelectors } from '../e2e-selectors/resolver';
 import { versionedComponents, versionedPages } from '../e2e-selectors/versioned';
-import { grafanaSelectorEngine } from '../customSelector';
+import { grafanaSelectorEngine } from '../selectorEngine';
 import { AnnotationPage } from '../models/AnnotationPage';
 import { VariablePage } from '../models/VariablePage';
 import { DataSourceConfigPage } from '../models/DataSourceConfigPage';

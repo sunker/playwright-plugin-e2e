@@ -20,7 +20,7 @@ describe('resolveSelectors', () => {
     expect(selectors.components.PanelEditor.General.content).toBe('Panel editor content');
   });
 
-  test('handles selector with multiple versions', () => {
+  test('returns the right selector value when is has multiple versions', () => {
     versionedSelectors.components.CodeEditor.container = {
       '10.3.0': 'data-testid Code editor container',
       [MIN_GRAFANA_VERSION]: 'Code editor container',

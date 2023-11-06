@@ -7,13 +7,13 @@ import { EditPanelPage } from './EditPanelPage';
 import { VariablePage } from './VariablePage';
 import { TimeRange } from './TimeRange';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../types';
+import { PluginTestCtx } from '../types';
 
 export class DashboardPage extends GrafanaPage {
   dataSourcePicker: any;
   timeRange: TimeRange;
 
-  constructor(testCtx: PluginTestArgs, expect: Expect<any>, protected readonly dashboardUid?: string) {
+  constructor(testCtx: PluginTestCtx, expect: Expect<any>, protected readonly dashboardUid?: string) {
     super(testCtx, expect);
     this.dataSourcePicker = new DataSourcePicker(testCtx, expect);
     this.timeRange = new TimeRange(testCtx, this.expect);

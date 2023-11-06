@@ -1,13 +1,13 @@
 const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../types';
+import { PluginTestCtx } from '../types';
 import { createDataSourceViaAPI } from 'src/commands/createDataSource';
 
 export class DataSourceConfigPage extends GrafanaPage {
   datasourceJson: any;
 
-  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+  constructor(testCtx: PluginTestCtx, expect: Expect<any>) {
     super(testCtx, expect);
   }
 

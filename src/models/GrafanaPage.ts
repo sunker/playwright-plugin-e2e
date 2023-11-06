@@ -1,8 +1,8 @@
 import { Expect, Locator } from '@playwright/test';
-import { PluginTestArgs } from '../types';
+import { PluginTestCtx } from '../types';
 
 export abstract class GrafanaPage {
-  constructor(protected readonly testCtx: PluginTestArgs, protected readonly expect: Expect<any>) {}
+  constructor(protected readonly testCtx: PluginTestCtx, protected readonly expect: Expect<any>) {}
 
   async goto() {
     await this.testCtx.page.goto('/', {

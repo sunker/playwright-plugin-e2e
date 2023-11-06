@@ -2,13 +2,13 @@ import { Expect } from '@playwright/test';
 import { DataSourcePicker } from './DataSourcePicker';
 
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestArgs } from '../types';
+import { PluginTestCtx } from '../types';
 
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 
 export class AnnotationEditPage extends GrafanaPage {
   datasource: DataSourcePicker;
-  constructor(testCtx: PluginTestArgs, expect: Expect<any>) {
+  constructor(testCtx: PluginTestCtx, expect: Expect<any>) {
     super(testCtx, expect);
     this.datasource = new DataSourcePicker(testCtx, expect);
   }
