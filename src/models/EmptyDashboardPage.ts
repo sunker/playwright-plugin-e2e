@@ -3,12 +3,12 @@ import { DashboardPage } from './DashboardPage';
 import { PluginTestCtx } from '../types';
 
 export class EmptyDashboardPage extends DashboardPage {
-  constructor(testCtx: PluginTestCtx, expect: Expect<any>) {
-    super(testCtx, expect);
+  constructor(ctx: PluginTestCtx, expect: Expect<any>) {
+    super(ctx, expect);
   }
 
   async goto() {
-    await this.testCtx.page.goto(this.testCtx.selectors.pages.AddDashboard.url, {
+    await this.ctx.page.goto(this.ctx.selectors.pages.AddDashboard.url, {
       waitUntil: 'networkidle',
     });
   }

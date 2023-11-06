@@ -8,16 +8,16 @@ export type VariableType = 'Query' | 'Constant' | 'Custom';
 
 export class AnnotationEditPage extends GrafanaPage {
   datasource: DataSourcePicker;
-  constructor(testCtx: PluginTestCtx, expect: Expect<any>) {
-    super(testCtx, expect);
-    this.datasource = new DataSourcePicker(testCtx, expect);
+  constructor(ctx: PluginTestCtx, expect: Expect<any>) {
+    super(ctx, expect);
+    this.datasource = new DataSourcePicker(ctx, expect);
   }
 
   async runQuery() {
-    await this.testCtx.page.getByRole('button', { name: 'TEST' }).click();
+    await this.ctx.page.getByRole('button', { name: 'TEST' }).click();
   }
 
   async expectRunQueryResultToContainText(text: string) {
-    await this.expect(this.testCtx.page.getByText(text)).toBeVisible();
+    await this.expect(this.ctx.page.getByText(text)).toBeVisible();
   }
 }
