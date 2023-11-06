@@ -1,6 +1,6 @@
 const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
-import { createDataSourceViaAPI } from 'src/commands/createDataSource';
+import { createDataSourceViaAPI } from '../commands/createDataSource';
 import { DataSource, PluginTestCtx } from '../types';
 import { GrafanaPage } from './GrafanaPage';
 
