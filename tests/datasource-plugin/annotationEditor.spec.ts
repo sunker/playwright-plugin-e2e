@@ -3,7 +3,7 @@ import { test } from '../../src';
 import { ds } from './datasource';
 import { RedshiftProvision } from './types';
 
-test.skip('annotation editor with existing ds', async ({ annotationEditPage, page, selectors }) => {
+test('annotation editor with existing ds', async ({ annotationEditPage, page, selectors }) => {
   await annotationEditPage.datasource.set(ds.name!);
   await annotationEditPage.getCodeEditor().then((l) => l.click());
   await page.keyboard.insertText('SELECT starttime, eventname FROM event ORDER BY eventname ASC LIMIT 5 ');

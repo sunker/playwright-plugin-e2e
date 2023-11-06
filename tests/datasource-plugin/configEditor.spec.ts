@@ -1,7 +1,6 @@
 import randomstring from 'randomstring';
 import { test } from '../../src';
 import { ds } from './datasource';
-import { RedshiftProvision } from './types';
 
 test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvision }) => {
   await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', ds.name);
@@ -21,9 +20,6 @@ test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvi
 });
 
 test('valid keys config', async ({ dataSourceConfigPage, page, readProvision }) => {
-  const ds = await readProvision<RedshiftProvision>({ filePath: 'datasources/aws-redshift.yaml' }).then(
-    (res) => res.datasources[0]
-  );
   await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', `redshift-${randomstring.generate()}`);
   await dataSourceConfigPage.getByTestIdOrAriaLabel('Authentication Provider').fill('Access & secret key');
   await page.keyboard.press('Enter');
