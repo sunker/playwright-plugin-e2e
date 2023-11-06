@@ -8,7 +8,7 @@ test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvi
   await page.keyboard.press('Enter');
   await dataSourceConfigPage.getByTestIdOrAriaLabel('Cluster Identifier').click();
   await page.waitForResponse((resp) => resp.url().includes('resources/clusters') && resp.status() === 200, {
-    timeout: 5000,
+    timeout: 30000,
   });
   await dataSourceConfigPage.getByTestIdOrAriaLabel('Cluster Identifier').fill(ds.jsonData.clusterIdentifier!);
   await page.keyboard.press('Enter');

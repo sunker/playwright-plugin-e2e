@@ -39,7 +39,7 @@ export class VariableEditPage extends GrafanaPage {
   }
 
   async expectVariableQueryPreviewToContainText(text: string) {
-    this.expect(
+    await this.expect(
       this.getByTestIdOrAriaLabel(
         this.ctx.selectors.pages.Dashboard.Settings.Variables.Edit.General.previewOfValuesOption
       )
