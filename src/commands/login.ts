@@ -8,7 +8,6 @@ type LoginCommand = TestFixture<() => Promise<void>, PluginFixture & PluginOptio
 
 export const loginCommand: LoginCommand = async ({ request, httpCredentials }, use) => {
   await use(async () => {
-    console.log(httpCredentials);
     const data = httpCredentials ? { ...httpCredentials, user: 'admin' } : { user: 'admin', password: 'admin' };
     const loginReq = await request.post('/login', { data });
     const text = await loginReq.text();

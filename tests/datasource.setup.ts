@@ -27,6 +27,6 @@ setup('setupDataSource', async ({ createDataSource }) => {
   try {
     await createDataSource({ datasource });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
