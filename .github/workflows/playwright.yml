@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start Grafana
-        run: docker run --rm -d -p 3001:3000 --name=grafana --env AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }} --env AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_KEY }} --env GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-redshift-datasource,grafana-clock-panel GF_INSTALL_PLUGINS=grafana-redshift-datasource,grafana-clock-panel grafana/grafana:${{ matrix.GRAFANA_VERSION }}; sleep 30
+        run: docker run --rm -d -p 3001:3000 --name=grafana --env AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }} --env AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_KEY }} --env GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-redshift-datasource,grafana-clock-panel --env GF_INSTALL_PLUGINS=grafana-redshift-datasource,grafana-clock-panel grafana/grafana:${{ matrix.GRAFANA_VERSION }}; sleep 30
 
       - name: Run Playwright tests
         run: yarn playwright:test
