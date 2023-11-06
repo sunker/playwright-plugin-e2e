@@ -1,7 +1,6 @@
-import { Expect } from '@playwright/test';
-import { GrafanaLocator, Visualization } from '../types';
+import { Expect, Locator } from '@playwright/test';
+import { Visualization } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
-import { attachCustomLocators } from '../locator';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { TimeSeriesPanel } from './TimeSeriesPanel';
@@ -55,12 +54,12 @@ export class PanelEditPage extends GrafanaPage {
     await this.ctx.page.getByTestId(this.ctx.selectors.components.PanelEditor.applyButton).click();
   }
 
-  async getQueryEditorEditorRow(refId: string): Promise<GrafanaLocator> {
-    const locator = await this.ctx.page.locator('[aria-label="Query editor row"]').filter({
+  getQueryEditorEditorRow(refId: string): Locator {
+    const locator = this.ctx.page.locator('[aria-label="Query editor row"]').filter({
       has: this.ctx.page.locator(`[aria-label="Query editor row title ${refId}"]`),
     });
     this.expect(locator).toBeVisible();
-    return attachCustomLocators(locator);
+    return locator;
   }
 
   async refreshDashboard(waitForQueryRequest: boolean = false) {

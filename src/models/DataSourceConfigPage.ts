@@ -1,18 +1,18 @@
 const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
+import { DataSource, PluginTestCtx } from '../types';
 import { createDataSourceViaAPI } from 'src/commands/createDataSource';
 
 export class DataSourceConfigPage extends GrafanaPage {
-  datasourceJson: any;
+  datasourceJson: DataSource | undefined;
 
   constructor(ctx: PluginTestCtx, expect: Expect<any>) {
     super(ctx, expect);
   }
 
   async createDataSource(type: string, name?: string) {
-    await createDataSourceViaAPI(this.ctx.request, { type, name });
+    this.datasourceJson = await createDataSourceViaAPI(this.ctx.request, { type, name });
     await this.goto();
   }
 
@@ -23,6 +23,9 @@ export class DataSourceConfigPage extends GrafanaPage {
   }
 
   async goto() {
+    if (!this.datasourceJson) {
+      throw new Error('Datasource not created');
+    }
     const url = `${gte(this.ctx.grafanaVersion, '10.2.0') ? '/connections' : ''}/datasources/edit/${
       this.datasourceJson.uid
     }`;

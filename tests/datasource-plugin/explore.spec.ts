@@ -14,6 +14,8 @@ test('fill in new query, run it and assert on result', async ({ explorePage, pag
   await page.getByText('average_temperature').last().click();
   await queryEditorRowLocator.locator('selector=Format as').fill('Table');
   await page.keyboard.press('Enter');
+
+  await explorePage.getCodeEditor(queryEditorRowLocator).then((l) => l.click());
   const codeEditor = await queryEditorRowLocator.locator(`selector=${selectors.components.CodeEditor.container}`);
   await codeEditor.click();
   await page.keyboard.insertText('SELECT eventname FROM event ORDER BY eventname ASC LIMIT 1');

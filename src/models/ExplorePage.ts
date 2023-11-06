@@ -1,9 +1,7 @@
-import { Expect } from '@playwright/test';
-import { GrafanaLocator } from '../types';
+import { Expect, Locator } from '@playwright/test';
 import { DataSourcePicker } from './DataSourcePicker';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
-import { attachCustomLocators } from '../locator';
 import { GrafanaPage } from './GrafanaPage';
 import { PluginTestCtx } from '../types';
 
@@ -24,12 +22,12 @@ export class ExplorePage extends GrafanaPage {
     });
   }
 
-  async getQueryEditorEditorRow(refId: string): Promise<GrafanaLocator> {
-    const locator = await this.ctx.page.locator('[aria-label="Query editor row"]').filter({
+  getQueryEditorEditorRow(refId: string): Locator {
+    const locator = this.ctx.page.locator('[aria-label="Query editor row"]').filter({
       has: this.ctx.page.locator(`[aria-label="Query editor row title ${refId}"]`),
     });
     this.expect(locator).toBeVisible();
-    return attachCustomLocators(locator);
+    return locator;
   }
 
   async runQuery() {

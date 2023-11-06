@@ -13,13 +13,12 @@ test('fill in new query, run it and assert on result in table panel', async ({
   await emptyPanelEditPage.setVisualization('Table');
   await emptyPanelEditPage.datasource.set(ds.name);
   await emptyPanelEditPage.timeRange.set({ from: '2021-01-01', to: '2021-01-02' });
-  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('A');
+  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('B');
 
   // ds specific tests
-  await queryEditorRow.getByTestIdOrAriaLabel('data-testid table').locator('input').click();
+  await emptyPanelEditPage.getByTestIdOrAriaLabel('data-testid table', queryEditorRow).locator('input').click();
   await page.getByText('average_temperature').last().click();
-  const codeEditor = await queryEditorRow.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container);
-  await codeEditor.click();
+  await emptyPanelEditPage.getCodeEditor(queryEditorRow).then((l) => l.click());
   await page.keyboard.insertText('SELECT eventname FROM event ORDER BY eventname ASC LIMIT 1');
 
   await emptyPanelEditPage.refreshDashboard();
@@ -41,11 +40,10 @@ test('fill in new query, run it and assert on result in timeseries panel', async
   const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('A');
 
   // ds specific tests
-  await queryEditorRow.getByTestIdOrAriaLabel('data-testid table').locator('input').click();
+  await emptyPanelEditPage.getByTestIdOrAriaLabel('data-testid table', queryEditorRow).locator('input').click();
   await page.getByText('average_temperature').last().click();
-  const codeEditor = await queryEditorRow.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container);
-  await codeEditor.click();
-  await page.keyboard.insertText('SELECT starttime,eventid,dateid FROM event ORDER BY starttime ASC LIMIT 100');
+  await emptyPanelEditPage.getCodeEditor(queryEditorRow).then((l) => l.click());
+  await page.keyboard.insertText('SELECT eventname FROM event ORDER BY eventname ASC LIMIT 1');
 
   await emptyPanelEditPage.refreshDashboard();
   await emptyPanelEditPage.timeSeriesPanel.expectToContainLegendLabels(['eventid', 'dateid']);

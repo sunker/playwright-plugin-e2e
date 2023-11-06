@@ -7,8 +7,7 @@ test('variable editor', async ({ variableEditPage, page, selectors, readProvisio
   );
   await variableEditPage.setVariableType('Query');
   await variableEditPage.datasource.set(ds.name);
-  await page.waitForFunction(() => (window as any).monaco);
-  await variableEditPage.getByTestIdOrAriaLabel(selectors.components.CodeEditor.container).click();
+  await variableEditPage.getCodeEditor().then((l) => l.click());
   await page.keyboard.insertText('SELECT eventname FROM event ORDER BY eventname ASC LIMIT 1');
   await variableEditPage.runQuery();
   await expect(
