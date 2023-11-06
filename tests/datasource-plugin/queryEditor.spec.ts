@@ -2,7 +2,7 @@ import { test } from '../../src';
 import { RedshiftProvision } from './types';
 
 test('fill in new query, run it and assert on result in table panel', async ({
-  emptyEditPanelPage,
+  emptyPanelEditPage,
   selectors,
   page,
   readProvision,
@@ -10,10 +10,10 @@ test('fill in new query, run it and assert on result in table panel', async ({
   const ds = await readProvision<RedshiftProvision>({ filePath: 'datasources/aws-redshift.yaml' }).then(
     (res) => res.datasources[0]
   );
-  await emptyEditPanelPage.setVisualization('Table');
-  await emptyEditPanelPage.datasource.set(ds.name);
-  await emptyEditPanelPage.timeRange.set({ from: '2021-01-01', to: '2021-01-02' });
-  const queryEditorRow = await emptyEditPanelPage.getQueryEditorEditorRow('A');
+  await emptyPanelEditPage.setVisualization('Table');
+  await emptyPanelEditPage.datasource.set(ds.name);
+  await emptyPanelEditPage.timeRange.set({ from: '2021-01-01', to: '2021-01-02' });
+  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('A');
 
   // ds specific tests
   await queryEditorRow.getByTestIdOrAriaLabel('data-testid table').locator('input').click();
@@ -22,12 +22,12 @@ test('fill in new query, run it and assert on result in table panel', async ({
   await codeEditor.click();
   await page.keyboard.insertText('SELECT eventname FROM event ORDER BY eventname ASC LIMIT 1');
 
-  await emptyEditPanelPage.refreshDashboard();
-  await emptyEditPanelPage.tablePanel.expectToContainText('.38 Special');
+  await emptyPanelEditPage.refreshDashboard();
+  await emptyPanelEditPage.tablePanel.expectToContainText('.38 Special');
 });
 
 test('fill in new query, run it and assert on result in timeseries panel', async ({
-  emptyEditPanelPage,
+  emptyPanelEditPage,
   selectors,
   page,
   readProvision,
@@ -35,10 +35,10 @@ test('fill in new query, run it and assert on result in timeseries panel', async
   const ds = await readProvision<RedshiftProvision>({ filePath: 'datasources/aws-redshift.yaml' }).then(
     (res) => res.datasources[0]
   );
-  await emptyEditPanelPage.setVisualization('Time series');
-  await emptyEditPanelPage.datasource.set(ds.name);
-  await emptyEditPanelPage.timeRange.set({ from: '2008-01-01', to: '2008-01-03' });
-  const queryEditorRow = await emptyEditPanelPage.getQueryEditorEditorRow('A');
+  await emptyPanelEditPage.setVisualization('Time series');
+  await emptyPanelEditPage.datasource.set(ds.name);
+  await emptyPanelEditPage.timeRange.set({ from: '2008-01-01', to: '2008-01-03' });
+  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('A');
 
   // ds specific tests
   await queryEditorRow.getByTestIdOrAriaLabel('data-testid table').locator('input').click();
@@ -47,6 +47,6 @@ test('fill in new query, run it and assert on result in timeseries panel', async
   await codeEditor.click();
   await page.keyboard.insertText('SELECT starttime,eventid,dateid FROM event ORDER BY starttime ASC LIMIT 100');
 
-  await emptyEditPanelPage.refreshDashboard();
-  await emptyEditPanelPage.timeSeriesPanel.expectToContainLegendLabels(['eventid', 'dateid']);
+  await emptyPanelEditPage.refreshDashboard();
+  await emptyPanelEditPage.timeSeriesPanel.expectToContainLegendLabels(['eventid', 'dateid']);
 });

@@ -8,7 +8,7 @@ import { TimeSeriesPanel } from './TimeSeriesPanel';
 import { GrafanaPage } from './GrafanaPage';
 import { PluginTestCtx } from '../types';
 
-export class EditPanelPage extends GrafanaPage {
+export class PanelEditPage extends GrafanaPage {
   datasource: DataSourcePicker;
   tablePanel: TablePanel;
   timeRange: TimeRange;

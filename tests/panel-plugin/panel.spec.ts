@@ -6,13 +6,13 @@ test.describe(() => {
   test.use({ httpCredentials: { username: 'admin', password: 'admin' } });
   test.describe.configure({ mode: 'parallel' });
   test('add a clock panel in new dashboard and set time format to "12 hour"', async ({
-    emptyEditPanelPage,
+    emptyPanelEditPage,
     selectors,
     page,
   }) => {
-    await emptyEditPanelPage.setVisualization('Clock');
-    await emptyEditPanelPage.setPanelTitle('Clock panel test');
-    await emptyEditPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    await emptyPanelEditPage.setVisualization('Clock');
+    await emptyPanelEditPage.setPanelTitle('Clock panel test');
+    await emptyPanelEditPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });
@@ -25,9 +25,9 @@ test.describe(() => {
   }, testInfo) => {
     testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath));
     const dashboardPage = await importDashboard({ filePath: dashboardPath });
-    const editPanelPage = await dashboardPage.gotoEditPanelPage('5');
-    await expect(editPanelPage.getVisualizationName()).toHaveText('Clock');
-    await editPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    const panelEditPage = await dashboardPage.gotoPanelEditPage('5');
+    await expect(panelEditPage.getVisualizationName()).toHaveText('Clock');
+    await panelEditPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });
@@ -46,9 +46,9 @@ test.describe(() => {
       expect,
       dashboardJson.uid
     );
-    const editPanelPage = await dashboardPage.gotoEditPanelPage('5');
-    await expect(editPanelPage.getVisualizationName()).toHaveText('Clock');
-    await editPanelPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
+    const panelEditPage = await dashboardPage.gotoPanelEditPage('5');
+    await expect(panelEditPage.getVisualizationName()).toHaveText('Clock');
+    await panelEditPage.getByTestIdOrAriaLabel(selectors.components.OptionsGroup.group('Clock')).click();
     await page.getByText('12 Hour').click();
     await expect(page.getByRole('heading', { name: /.*[APap][mM]$/ })).toBeVisible();
   });

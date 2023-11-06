@@ -9,7 +9,7 @@ import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
 import { VariableEditPage } from '../models/VariableEditPage';
 import { DashboardPage } from '../models/DashboardPage';
 import { AnnotationEditPage } from '../models/AnnotationEditPage';
-import { EditPanelPage } from '../models/EditPanelPage';
+import { PanelEditPage } from '../models/PanelEditPage';
 import { ExplorePage } from '../models/ExplorePage';
 import { E2ESelectors } from '../e2e-selectors/types';
 import { ImportDashboardArgs, GotoDashboardArgs, DataSource, CreateDataSourceArgs } from '../types';
@@ -57,16 +57,16 @@ export type PluginFixture = {
   emptyDashboardPage: EmptyDashboardPage;
 
   /**
-   * Isolated {@link EditPanelPage} instance for each test.
+   * Isolated {@link PanelEditPage} instance for each test.
    *
    * Navigates to a new dashboard page and adds a new panel.
    *
-   * Use {@link EditPanelPage.setVisualization} to change the visualization
-   * Use {@link EditPanelPage.datasource.set} to change the
+   * Use {@link PanelEditPage.setVisualization} to change the visualization
+   * Use {@link PanelEditPage.datasource.set} to change the
    * Use {@link ExplorePage.getQueryEditorEditorRow} to retrieve the query
    * editor row locator for a given query refId
    */
-  emptyEditPanelPage: EditPanelPage;
+  emptyPanelEditPage: PanelEditPage;
 
   /**
    * Isolated {@link VariableEditPage} instance for each test.
@@ -91,7 +91,7 @@ export type PluginFixture = {
    *
    * Navigates to a the explore page.
    *
-   * Use {@link ExplorePage.EditPanelPage.datasource.set} to change the datasource
+   * Use {@link ExplorePage.PanelEditPage.datasource.set} to change the datasource
    * Use {@link ExplorePage.getQueryEditorEditorRow} to retrieve the query editor
    * row locator for a given query refId
    */
@@ -182,9 +182,9 @@ export const test = base.extend<PluginFixture & PluginOptions>({
     await emptyDashboardPage.goto();
     await use(emptyDashboardPage);
   },
-  emptyEditPanelPage: async ({ emptyDashboardPage }, use) => {
-    const editPanelPage = await emptyDashboardPage.addPanel();
-    await use(editPanelPage);
+  emptyPanelEditPage: async ({ emptyDashboardPage }, use) => {
+    const panelEditPage = await emptyDashboardPage.addPanel();
+    await use(panelEditPage);
   },
   variableEditPage: async ({ page, selectors, grafanaVersion, request }, use) => {
     const variablePage = new VariablePage({ page, selectors, grafanaVersion, request }, expect);

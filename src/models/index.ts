@@ -1,7 +1,7 @@
 export { DataSourceConfigPage } from './DataSourceConfigPage';
 export { DashboardPage } from './DashboardPage';
 export { EmptyDashboardPage } from './EmptyDashboardPage';
-export { EditPanelPage } from './EditPanelPage';
+export { PanelEditPage } from './PanelEditPage';
 export { VariablePage } from './VariablePage';
 export { VariableEditPage } from './VariableEditPage';
 export { AnnotationPage } from './AnnotationPage';

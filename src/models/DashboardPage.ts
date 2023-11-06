@@ -3,7 +3,7 @@ const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
 import { GotoDashboardArgs } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
-import { EditPanelPage } from './EditPanelPage';
+import { PanelEditPage } from './PanelEditPage';
 import { VariablePage } from './VariablePage';
 import { TimeRange } from './TimeRange';
 import { GrafanaPage } from './GrafanaPage';
@@ -32,12 +32,12 @@ export class DashboardPage extends GrafanaPage {
     }
   }
 
-  async gotoEditPanelPage(panelId: string) {
+  async gotoPanelEditPage(panelId: string) {
     const url = this.ctx.selectors.pages.Dashboard.url(this.dashboardUid ?? '');
     await this.ctx.page.goto(`${url}?editPanel=${panelId}`, {
       waitUntil: 'networkidle',
     });
-    return new EditPanelPage(this.ctx, this.expect);
+    return new PanelEditPage(this.ctx, this.expect);
   }
 
   async gotoAddVariablePage() {
@@ -48,7 +48,7 @@ export class DashboardPage extends GrafanaPage {
     return new VariablePage(this.ctx, this.expect);
   }
 
-  async addPanel(): Promise<EditPanelPage> {
+  async addPanel(): Promise<PanelEditPage> {
     if (gte(this.ctx.grafanaVersion, '10.0.0')) {
       const title = gte(this.ctx.grafanaVersion, '10.1.0') ? 'Add button' : 'Add panel button';
       await this.getByTestIdOrAriaLabel(this.ctx.selectors.components.PageToolbar.itemButton(title)).click();
@@ -59,7 +59,7 @@ export class DashboardPage extends GrafanaPage {
       await this.getByTestIdOrAriaLabel(this.ctx.selectors.pages.AddDashboard.addNewPanel).click();
     }
 
-    return new EditPanelPage(this.ctx, this.expect);
+    return new PanelEditPage(this.ctx, this.expect);
   }
 
   async deleteDashboard() {
