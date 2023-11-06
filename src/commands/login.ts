@@ -1,5 +1,5 @@
 import { expect, TestFixture } from '@playwright/test';
-import { PluginOptions, PluginFixture } from '../fixtures/plugin';
+import { PluginFixture, PluginOptions } from '../fixtures/plugin';
 import { PlaywrightCombinedArgs } from './types';
 
 const authFile = 'playwright/.auth/user.json';

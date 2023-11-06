@@ -1,7 +1,6 @@
 import { Expect } from '@playwright/test';
-import { TimeRangeArgs } from '../types';
+import { PluginTestCtx, TimeRangeArgs } from '../types';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
 
 export class TimeRange extends GrafanaPage {
   constructor(ctx: PluginTestCtx, expect: Expect<any>) {

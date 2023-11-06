@@ -1,8 +1,8 @@
 const gte = require('semver/functions/gte');
 import { Expect } from '@playwright/test';
+import { PluginTestCtx } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
 
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 

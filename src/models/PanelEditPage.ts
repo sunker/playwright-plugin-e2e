@@ -1,11 +1,11 @@
 import { Expect, Locator } from '@playwright/test';
-import { Visualization } from '../types';
+
+import { PluginTestCtx, Visualization } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
+import { GrafanaPage } from './GrafanaPage';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
 import { TimeSeriesPanel } from './TimeSeriesPanel';
-import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
 
 export class PanelEditPage extends GrafanaPage {
   datasource: DataSourcePicker;
@@ -62,7 +62,7 @@ export class PanelEditPage extends GrafanaPage {
     return locator;
   }
 
-  async refreshDashboard(waitForQueryRequest: boolean = false) {
+  async refreshDashboard(waitForQueryRequest = false) {
     // in older versions of grafana, the refresh button is rendered twice. this is a workaround to click the correct one
     await this.getByTestIdOrAriaLabel(this.ctx.selectors.components.PanelEditor.General.content)
       .locator(`selector=${this.ctx.selectors.components.RefreshPicker.runButtonV2}`)

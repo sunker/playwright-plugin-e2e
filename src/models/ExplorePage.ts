@@ -1,9 +1,9 @@
 import { Expect, Locator } from '@playwright/test';
+import { PluginTestCtx } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
+import { GrafanaPage } from './GrafanaPage';
 import { TablePanel } from './TablePanel';
 import { TimeRange } from './TimeRange';
-import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
 
 export class ExplorePage extends GrafanaPage {
   datasource: DataSourcePicker;

@@ -1,6 +1,5 @@
 import fs from 'fs';
-const lte = require('semver/functions/lte');
-import { test, expect, DashboardPage } from '../../src';
+import { DashboardPage, expect, test } from '../../src';
 
 test.describe(() => {
   test.use({ httpCredentials: { username: 'admin', password: 'admin' } });

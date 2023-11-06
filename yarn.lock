@@ -497,7 +497,7 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.42.0.tgz#484a1d638de2911e6f5a30c12f49c7e4a3270fb6"
   integrity sha512-6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==
 
-"@grafana/eslint-config@^6.0.0":
+"@grafana/eslint-config@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@grafana/eslint-config/-/eslint-config-6.0.1.tgz#70f3e1990ab83591b566dec7bce214a1eb4d09c4"
   integrity sha512-Tv6BUyJu2kHjrghkQJGhVCwJfNeyNbf/UqqUDW5j04+R0Y4YgWshZ4FrJibkfJc26/3UvfYSnYd+On1psbQIlA==

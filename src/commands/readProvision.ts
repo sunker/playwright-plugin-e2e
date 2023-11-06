@@ -1,8 +1,8 @@
+import { TestFixture } from '@playwright/test';
 import { promises } from 'fs';
 import { resolve as resolvePath } from 'path';
 import { parse as parseYml } from 'yaml';
-import { TestFixture } from '@playwright/test';
-import { PluginOptions, PluginFixture } from '../fixtures/plugin';
+import { PluginFixture, PluginOptions } from '../fixtures/plugin';
 import { ReadProvisionArgs } from '../types';
 import { PlaywrightCombinedArgs } from './types';
 

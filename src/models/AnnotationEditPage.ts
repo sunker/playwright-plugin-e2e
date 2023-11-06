@@ -1,8 +1,8 @@
 import { Expect } from '@playwright/test';
 import { DataSourcePicker } from './DataSourcePicker';
 
-import { GrafanaPage } from './GrafanaPage';
 import { PluginTestCtx } from '../types';
+import { GrafanaPage } from './GrafanaPage';
 
 export type VariableType = 'Query' | 'Constant' | 'Custom';
 

@@ -1,4 +1,5 @@
 import { Locator, PlaywrightTestArgs } from '@playwright/test';
+
 import { E2ESelectors } from './e2e-selectors/types';
 
 /**

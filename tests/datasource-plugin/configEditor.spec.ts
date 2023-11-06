@@ -1,7 +1,7 @@
 import randomstring from 'randomstring';
 import { test } from '../../src';
-import { RedshiftProvision } from './types';
 import { ds } from './datasource';
+import { RedshiftProvision } from './types';
 
 test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvision }) => {
   await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', ds.name);

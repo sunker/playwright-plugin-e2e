@@ -1,13 +1,13 @@
 const gte = require('semver/functions/gte');
 
+import { GotoDashboardArgs, PluginTestCtx } from '../types';
+
 import { Expect } from '@playwright/test';
-import { GotoDashboardArgs } from '../types';
 import { DataSourcePicker } from './DataSourcePicker';
-import { PanelEditPage } from './PanelEditPage';
-import { VariablePage } from './VariablePage';
-import { TimeRange } from './TimeRange';
 import { GrafanaPage } from './GrafanaPage';
-import { PluginTestCtx } from '../types';
+import { PanelEditPage } from './PanelEditPage';
+import { TimeRange } from './TimeRange';
+import { VariablePage } from './VariablePage';
 
 export class DashboardPage extends GrafanaPage {
   dataSourcePicker: any;

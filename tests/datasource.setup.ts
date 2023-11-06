@@ -1,4 +1,4 @@
-import { test as setup, DataSource } from '../src';
+import { DataSource, test as setup } from '../src';
 
 const datasource: DataSource = {
   database: '',

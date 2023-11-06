@@ -1,26 +1,26 @@
-import { test as base, selectors, expect } from '@playwright/test';
-import { resolveSelectors } from '../e2e-selectors/resolver';
-import { versionedComponents, versionedPages } from '../e2e-selectors/versioned';
-import { grafanaSelectorEngine } from '../selectorEngine';
-import { AnnotationPage } from '../models/AnnotationPage';
-import { VariablePage } from '../models/VariablePage';
-import { DataSourceConfigPage } from '../models/DataSourceConfigPage';
-import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
-import { VariableEditPage } from '../models/VariableEditPage';
-import { DashboardPage } from '../models/DashboardPage';
-import { AnnotationEditPage } from '../models/AnnotationEditPage';
-import { PanelEditPage } from '../models/PanelEditPage';
-import { ExplorePage } from '../models/ExplorePage';
-import { E2ESelectors } from '../e2e-selectors/types';
-import { ImportDashboardArgs, GotoDashboardArgs, DataSource, CreateDataSourceArgs } from '../types';
-
+import { test as base, expect, selectors } from '@playwright/test';
 import {
-  readProvisionCommand,
+  createDataSourceViaAPICommand,
   gotoDashboardCommand,
   importDashboardCommand,
   loginCommand,
-  createDataSourceViaAPICommand,
+  readProvisionCommand,
 } from '../commands';
+import { versionedComponents, versionedPages } from '../e2e-selectors/versioned';
+import { CreateDataSourceArgs, DataSource, GotoDashboardArgs, ImportDashboardArgs } from '../types';
+
+import { resolveSelectors } from '../e2e-selectors/resolver';
+import { E2ESelectors } from '../e2e-selectors/types';
+import { AnnotationEditPage } from '../models/AnnotationEditPage';
+import { AnnotationPage } from '../models/AnnotationPage';
+import { DashboardPage } from '../models/DashboardPage';
+import { DataSourceConfigPage } from '../models/DataSourceConfigPage';
+import { EmptyDashboardPage } from '../models/EmptyDashboardPage';
+import { ExplorePage } from '../models/ExplorePage';
+import { PanelEditPage } from '../models/PanelEditPage';
+import { VariableEditPage } from '../models/VariableEditPage';
+import { VariablePage } from '../models/VariablePage';
+import { grafanaSelectorEngine } from '../selectorEngine';
 
 selectors.register('selector', grafanaSelectorEngine);
 
@@ -115,11 +115,11 @@ export type PluginFixture = {
         },
       },
     });
-    * 
-    * To override credentials in a single test:
-    * test.use({ httpCredentials: { username: 'admin', password: 'admin' } });
-    * To avoid authentication in a single test:
-    * test.use({ storageState: { cookies: [], origins: [] } });
+   * 
+   * To override credentials in a single test:
+   * test.use({ httpCredentials: { username: 'admin', password: 'admin' } });
+   * To avoid authentication in a single test:
+   * test.use({ storageState: { cookies: [], origins: [] } });
    */
   login: () => Promise<void>;
 

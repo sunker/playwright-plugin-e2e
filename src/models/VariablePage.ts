@@ -1,7 +1,7 @@
 import { Expect } from '@playwright/test';
-import { VariableEditPage } from './VariableEditPage';
-import { GrafanaPage } from './GrafanaPage';
 import { PluginTestCtx } from '../types';
+import { GrafanaPage } from './GrafanaPage';
+import { VariableEditPage } from './VariableEditPage';
 
 export class VariablePage extends GrafanaPage {
   constructor(ctx: PluginTestCtx, expect: Expect<any>) {

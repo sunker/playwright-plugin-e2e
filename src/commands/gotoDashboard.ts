@@ -1,8 +1,8 @@
 import { expect, TestFixture } from '@playwright/test';
+import { PluginFixture, PluginOptions } from '../fixtures/plugin';
 import { DashboardPage } from '../models/DashboardPage';
-import { PlaywrightCombinedArgs } from './types';
-import { PluginOptions, PluginFixture } from '../fixtures/plugin';
 import { GotoDashboardArgs } from '../types';
+import { PlaywrightCombinedArgs } from './types';
 
 type GotoDashboardCommand = TestFixture<
   (args: GotoDashboardArgs) => Promise<DashboardPage>,
