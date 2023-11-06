@@ -11,6 +11,7 @@
     "./package.json"
   ],
   "scripts": {
+    "playwright:test": "npx playwright test",
     "server": "docker-compose up --build",
     "update": "npm version patch --force && yarn build && npm pack",
     "dev": "yarn bundle -w",
