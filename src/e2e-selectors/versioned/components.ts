@@ -3,12 +3,14 @@ import { MIN_GRAFANA_VERSION } from './constants';
 export const versionedComponents = {
   Breadcrumbs: {
     breadcrumb: {
-      '10.2.0': (title: string) => `data-testid ${title} breadcrumb`,
+      // did not exist prior to 9.4.0
+      '9.4.0': (title: string) => `data-testid ${title} breadcrumb`,
     },
   },
   TimePicker: {
     openButton: {
       '10.2.0': 'data-testid TimePicker open button',
+      [MIN_GRAFANA_VERSION]: 'TimePicker open button',
     },
     fromField: 'Time Range from field',
     toField: 'Time Range to field',
@@ -110,8 +112,8 @@ export const versionedComponents = {
         header: 'table header',
         footer: 'table-footer',
         body: {
+          // did not exist prior to 10.2.0
           '10.2.0': 'data-testid table body',
-          [MIN_GRAFANA_VERSION]: 'data-testid table body',
         },
       },
     },
@@ -144,7 +146,7 @@ export const versionedComponents = {
     applyButton: 'data-testid Apply changes and go back to dashboard',
     toggleVizPicker: {
       '10.0.0': 'data-testid toggle-viz-picker',
-      '7.0.0': 'toggle-viz-picker',
+      [MIN_GRAFANA_VERSION]: 'toggle-viz-picker',
     },
     toggleVizOptions: 'data-testid toggle-viz-options',
     toggleTableView: 'toggle-table-view',
@@ -313,8 +315,9 @@ export const versionedComponents = {
   },
   DataSourcePicker: {
     container: {
-      '8.3.0': 'Data source picker select container',
       '10.0.0': 'data-testid Data source picker select container',
+      // did not exist prior to 8.3.0
+      '8.3.0': 'Data source picker select container',
     },
     /**
      * @deprecated use inputV2 instead
