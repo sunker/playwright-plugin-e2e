@@ -8,9 +8,15 @@ export class TimeRange extends GrafanaPage {
   }
 
   async set({ from, to, zone }: TimeRangeArgs) {
-    // await this.getByTestIdOrAriaLabel(this.test.selectors.components.TimePicker.openButton).click();
-    //TODO: investigate why above doesn't work
-    await this.ctx.page.locator('[aria-controls="TimePickerContent"]').click();
+    try {
+      await this.ctx.page
+        .getByLabel(this.ctx.selectors.components.PanelEditor.General.content)
+        .locator(`selector=${this.ctx.selectors.components.TimePicker.openButton}`)
+        .click({ force: true, timeout: 2000 });
+    } catch (e) {
+      // seems like in older versions of Grafana the time picker markup is rendered twice
+      await this.ctx.page.locator('[aria-controls="TimePickerContent"]').last().click();
+    }
 
     if (zone) {
       await this.ctx.page.getByRole('button', { name: 'Change time settings' }).click();
@@ -26,10 +32,16 @@ export class TimeRange extends GrafanaPage {
     await this.getByTestIdOrAriaLabel(this.ctx.selectors.components.TimePicker.applyTimeRange).click();
 
     await this.expect
-      .soft(this.ctx.page.getByText(from), 'Could not set "from" in dashboard time range picker')
+      .soft(
+        this.ctx.page.getByLabel(this.ctx.selectors.components.PanelEditor.General.content).getByText(from),
+        'Could not set "from" in dashboard time range picker'
+      )
       .toBeVisible();
     await this.expect
-      .soft(this.ctx.page.getByText(to), 'Could not set "to" in dashboard time range picker')
+      .soft(
+        this.ctx.page.getByLabel(this.ctx.selectors.components.PanelEditor.General.content).getByText(to),
+        'Could not set "to" in dashboard time range picker'
+      )
       .toBeVisible();
   }
 }

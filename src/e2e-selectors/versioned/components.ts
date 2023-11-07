@@ -9,7 +9,7 @@ export const versionedComponents = {
   },
   TimePicker: {
     openButton: {
-      '10.2.0': 'data-testid TimePicker open button',
+      '8.1.0': 'data-testid TimePicker open button',
       [MIN_GRAFANA_VERSION]: 'TimePicker open button',
     },
     fromField: 'Time Range from field',

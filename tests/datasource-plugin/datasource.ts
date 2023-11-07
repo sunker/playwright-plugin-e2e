@@ -4,9 +4,10 @@ export const ds: DataSource = {
   database: '',
   type: 'grafana-redshift-datasource',
   name: 'Redshift_E2E_Test',
-  uid: 'P7DC3E4760CFAC4AHH',
+  uid: 'P7DC3E4760CFAC4AHHGGA',
   id: 1,
   access: 'proxy',
+  editable: true,
   url: '',
   isDefault: false,
   jsonData: {

@@ -9,7 +9,7 @@ test('fill in new query, run it and assert on result in table panel', async ({
   await emptyPanelEditPage.setVisualization('Table');
   await emptyPanelEditPage.datasource.set(ds.name!);
   await emptyPanelEditPage.timeRange.set({ from: '2021-01-01', to: '2021-01-02' });
-  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('B');
+  const queryEditorRow = await emptyPanelEditPage.getQueryEditorEditorRow('A');
 
   // ds specific tests
   await emptyPanelEditPage.getByTestIdOrAriaLabel('data-testid table', queryEditorRow).locator('input').click();
