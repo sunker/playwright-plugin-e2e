@@ -22,7 +22,7 @@ test.describe(() => {
     page,
     importDashboard,
   }, testInfo) => {
-    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath));
+    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Ignoring test because provision file does not exist');
     const dashboardPage = await importDashboard({ filePath: dashboardPath });
     const panelEditPage = await dashboardPage.gotoPanelEditPage('5');
     await expect(panelEditPage.getVisualizationName()).toHaveText('Clock');
@@ -38,7 +38,7 @@ test.describe(() => {
     grafanaVersion,
     readProvision,
   }, testInfo) => {
-    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Could not find dashboard file');
+    testInfo.skip(!fs.existsSync(process.cwd() + dashboardPath), 'Ignoring test because provision file does not exist');
     const dashboardJson = await readProvision({ filePath: 'dashboards/clockpanel/clock-panel.json' });
     const dashboardPage = await new DashboardPage(
       { page, selectors, grafanaVersion, request },

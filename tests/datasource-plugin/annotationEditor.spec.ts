@@ -1,4 +1,4 @@
-const lte = require('semver/functions/lte');
+import fs from 'fs';
 import { test } from '../../src';
 import { ds } from './datasource';
 import { QUERY_DATA_ANNOTATION_RESPONSE } from './mocks/queryDataResponse';
@@ -16,11 +16,13 @@ test('annotation editor with existing ds', async ({ annotationEditPage, page, se
 test('annotation editor with provisioned ds', async ({
   annotationEditPage,
   page,
-  selectors,
   readProvision,
   grafanaVersion,
 }, testInfo) => {
-  testInfo.skip(lte(grafanaVersion, '9.2.5'), 'Code Editor triggers one query per key down in Grafana 9.2.5 and below');
+  testInfo.skip(
+    !fs.existsSync(process.cwd() + 'datasources/aws-redshift.yaml'),
+    'Ignoring test because provision file does not exist'
+  );
   await annotationEditPage.mockQueryDataResponse(QUERY_DATA_ANNOTATION_RESPONSE);
   const ds = await readProvision<RedshiftProvision>({ filePath: 'datasources/aws-redshift.yaml' }).then(
     (res) => res.datasources[0]
