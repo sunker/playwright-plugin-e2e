@@ -31,4 +31,16 @@ export abstract class GrafanaPage {
     await this.ctx.page.waitForFunction(() => (window as any).monaco);
     return this.getByTestIdOrAriaLabel(this.ctx.selectors.components.CodeEditor.container, root);
   }
+
+  async mockQueryDataResponse<T = any>(json: T) {
+    await this.ctx.page.route('*/**/api/ds/query', async (route) => {
+      await route.fulfill({ json });
+    });
+  }
+
+  async mockResourceResponse<T = any>(path: string, json: T) {
+    await this.ctx.page.route(`/api/datasources/uid/**/resources/${path}`, async (route) => {
+      await route.fulfill({ json });
+    });
+  }
 }
