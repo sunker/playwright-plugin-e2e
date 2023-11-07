@@ -5,6 +5,7 @@ jobs:
   playwright-tests:
     timeout-minutes: 60
     strategy:
+      fail-fast: false
       matrix:
         GRAFANA_VERSION: ['latest', '10.1.5', '10.0.6', '9.5.0', '9.1.5']
     runs-on: ubuntu-latest
