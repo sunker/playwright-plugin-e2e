@@ -33,7 +33,7 @@ export abstract class GrafanaPage {
   }
 
   async mockQueryDataResponse<T = any>(json: T) {
-    await this.ctx.page.route('*/**/api/ds/query', async (route) => {
+    await this.ctx.page.route('*/**/api/ds/query*', async (route) => {
       await route.fulfill({ json });
     });
   }
