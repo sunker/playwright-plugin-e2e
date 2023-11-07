@@ -9,11 +9,7 @@ const pkg = require('./package.json');
 export default [
   {
     input: 'src/index.ts',
-    plugins: [
-      externals({ deps: true, peerDeps: true, packagePath: './package.json' }),
-      resolve(),
-      esbuild(),
-    ],
+    plugins: [externals({ deps: true, peerDeps: true, packagePath: './package.json' }), resolve(), esbuild()],
     output: [
       {
         format: 'cjs',

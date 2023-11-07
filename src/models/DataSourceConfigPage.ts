@@ -1,67 +1,47 @@
-import { expect, type Page, type APIRequestContext } from '@playwright/test';
-var randomstring = require('randomstring');
+const gte = require('semver/functions/gte');
+import { Expect } from '@playwright/test';
+import { createDataSourceViaAPI } from '../fixtures/commands/createDataSource';
+import { DataSource, PluginTestCtx } from '../types';
+import { GrafanaPage } from './GrafanaPage';
 
-export class DataSourceConfigPage {
-  datasourceJson: any;
+export class DataSourceConfigPage extends GrafanaPage {
+  datasourceJson: DataSource | undefined;
 
-  constructor(
-    private readonly page: Page,
-    private readonly request: APIRequestContext
-  ) {
-    this.page = page;
+  constructor(ctx: PluginTestCtx, expect: Expect<any>) {
+    super(ctx, expect);
   }
 
-  async createDataSource(type: string) {
-    try {
-      const name = `${type}-${randomstring.generate()}`;
-      const createDsReq = await this.request.post('/api/datasources', {
-        data: {
-          name,
-          type: type,
-          access: 'proxy',
-          isDefault: false,
-        },
-      });
-      expect(createDsReq.ok()).toBeTruthy();
-
-      // load ds by name
-      const getDsReq = await this.request.get(`/api/datasources/name/${name}`);
-      expect(getDsReq.ok()).toBeTruthy();
-      this.datasourceJson = await getDsReq.json();
-    } catch (error) {
-      console.log;
-    }
+  async createDataSource(type: string, name?: string) {
+    this.datasourceJson = await createDataSourceViaAPI(this.ctx.request, { type, name });
+    await this.goto();
   }
 
   async deleteDataSource() {
-    this.datasourceJson = await this.request.delete(
-      `/api/datasources/uid/${this.datasourceJson.uid}`
-    );
+    if (this.datasourceJson) {
+      await this.ctx.request.delete(`/api/datasources/uid/${this.datasourceJson.uid}`);
+    }
   }
 
   async goto() {
-    await this.page.goto(
-      `/connections/datasources/edit/${this.datasourceJson.uid}`,
-      {
-        waitUntil: 'networkidle',
-      }
-    );
-  }
-
-  async get() {
-    await this.page.locator('[aria-label="Secret Access Key"]').fill('hejsan');
+    if (!this.datasourceJson) {
+      throw new Error('Datasource not created');
+    }
+    const url = `${gte(this.ctx.grafanaVersion, '10.2.0') ? '/connections' : ''}/datasources/edit/${
+      this.datasourceJson.uid
+    }`;
+    await this.ctx.page.goto(url, {
+      waitUntil: 'load',
+    });
   }
 
   async saveAndTest() {
-    await this.page
-      .getByTestId('data-testid Data source settings page Save and Test button')
-      .click();
-    await this.page.waitForResponse((resp) => resp.url().includes('/health'));
+    await this.getByTestIdOrAriaLabel(this.ctx.selectors.pages.DataSource.saveAndTest).click();
+    await this.ctx.page.waitForResponse((resp) => resp.url().includes('/health'));
   }
 
   async expectHealthCheckResultTextToContain(text: string) {
-    return await expect(
-      this.page.locator('[aria-label="Data source settings page Alert"]')
-    ).toContainText(text);
+    return await this.expect(this.ctx.page.locator('[aria-label="Data source settings page Alert"]')).toContainText(
+      text
+    );
   }
 }

@@ -1,2 +1,5 @@
-export { test, expect } from './fixtures/pluginFixture';
-export { DataSourceConfigPage } from './models/DataSourceConfigPage';
+export { expect, test, type PluginFixture, type PluginOptions } from './api';
+export * from './e2e-selectors';
+export * from './fixtures';
+export * from './models';
+export * from './types';
