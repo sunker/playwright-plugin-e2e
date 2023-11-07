@@ -2,7 +2,7 @@ import randomstring from 'randomstring';
 import { test } from '../../src';
 import { ds } from './datasource';
 
-test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvision }) => {
+test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page }) => {
   await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', ds.name);
   await dataSourceConfigPage.getByTestIdOrAriaLabel('Default Region').fill(ds.jsonData.defaultRegion!);
   await page.keyboard.press('Enter');
@@ -19,7 +19,7 @@ test('valid aws-sdk-auth config', async ({ dataSourceConfigPage, page, readProvi
   await dataSourceConfigPage.expectHealthCheckResultTextToContain('Data source is working');
 });
 
-test('valid keys config', async ({ dataSourceConfigPage, page, readProvision }) => {
+test('valid keys config', async ({ dataSourceConfigPage, page }) => {
   await dataSourceConfigPage.createDataSource('grafana-redshift-datasource', `redshift-${randomstring.generate()}`);
   await dataSourceConfigPage.getByTestIdOrAriaLabel('Authentication Provider').fill('Access & secret key');
   await page.keyboard.press('Enter');

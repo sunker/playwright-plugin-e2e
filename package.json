@@ -19,7 +19,6 @@
     "bundle": "rollup -c rollup.config.ts",
     "clean": "rimraf ./dist ./compiled",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit",
-    "playwright": "npx playwright test",
     "test": "jest"
   },
   "keywords": [],

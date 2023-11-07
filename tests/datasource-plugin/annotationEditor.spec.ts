@@ -13,12 +13,7 @@ test('annotation editor with existing ds', async ({ annotationEditPage, page, se
   await annotationEditPage.expectRunQueryResultToContainText('5 events (from 2 fields)');
 });
 
-test('annotation editor with provisioned ds', async ({
-  annotationEditPage,
-  page,
-  readProvision,
-  grafanaVersion,
-}, testInfo) => {
+test('annotation editor with provisioned ds', async ({ annotationEditPage, page, readProvision }, testInfo) => {
   testInfo.skip(
     !fs.existsSync(process.cwd() + 'datasources/aws-redshift.yaml'),
     'Ignoring test because provision file does not exist'

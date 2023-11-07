@@ -3,7 +3,7 @@ import { test } from '../../src';
 import { ds } from './datasource';
 import { QUERY_DATA_QUERY_A_RESPONSE } from './mocks/queryDataResponse';
 
-test('fill in new query, run it and assert on result', async ({ explorePage, page, selectors, readProvision }) => {
+test('fill in new query, run it and assert on result', async ({ explorePage, page, selectors }) => {
   await explorePage.mockQueryDataResponse(QUERY_DATA_QUERY_A_RESPONSE);
 
   await explorePage.datasource.set(ds.name!);

@@ -2,7 +2,6 @@ import fs from 'fs';
 import { DashboardPage, expect, test } from '../../src';
 
 test.describe(() => {
-  test.use({ httpCredentials: { username: 'admin', password: 'admin' } });
   test.describe.configure({ mode: 'parallel' });
   test('add a clock panel in new dashboard and set time format to "12 hour"', async ({
     emptyPanelEditPage,
